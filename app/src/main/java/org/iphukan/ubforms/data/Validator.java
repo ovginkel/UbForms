@@ -27,7 +27,9 @@ public class Validator {
 			String value = values.get(attribute.getAttributeName());
 			if (value == null || value.trim().length() == 0) value = null;
 
-			if (attribute.isRequired() && value == null) return attribute.getAttributeName() + " is required.";
+			if (attribute.isRequired() && value == null) {
+                return String.format("%s is required", attribute.getAttributeName());
+            }
 
 			String regex = attribute.getValidationRegex();
 			if (regex == null || regex.trim().length() == 0) regex = null;
@@ -35,7 +37,7 @@ public class Validator {
 			if (value != null && regex != null) {
 				boolean matches = Pattern.matches(regex, value);
 				if (!matches) {
-					return attribute.getAttributeName() + " value " + value + " is invalid.  Example: "+attribute.getValidationExample();
+					return String.format("%s value %s is invalid. Example: %s",attribute.getAttributeName(),value,attribute.getValidationExample());
 				}
 			}
 
@@ -59,9 +61,9 @@ public class Validator {
 				sqlHelper.close();
 			}
 			if (results.size() > 0) {
-				String message = "A record already exists for ";
+				String message = "";
 				for (Attribute key: keys) {
-					message += key.getAttributeName() + " = " + values.get(key.getAttributeName()) + "  ";
+					message += String.format("A record already exists for, key: %s=%s",key.getAttributeName(),values.get(key.getAttributeName()));
 				}
 				return message;
 			}

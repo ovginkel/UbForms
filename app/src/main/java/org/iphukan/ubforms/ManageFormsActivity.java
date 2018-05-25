@@ -47,7 +47,7 @@ public class ManageFormsActivity extends BaseActivity {
 		parent.addView(entityLayout);
 		
 		Button btnAddEntity = new Button(this);
-		btnAddEntity.setText("Add Form");
+		btnAddEntity.setText(getString(R.string.add_form));
 		btnAddEntity.requestFocus();
 		btnAddEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
@@ -95,13 +95,13 @@ public class ManageFormsActivity extends BaseActivity {
 	private void addEntity() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setTitle("Add Form");
-		alert.setMessage("Enter new form name");
+		alert.setTitle(getString(R.string.add_form));
+		alert.setMessage(getString(R.string.enter_form_name));
 
 		final EditText input = new EditText(this);
 		alert.setView(input);
 
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			String name = input.getText().toString();
 			if (name.length() == 0) return;
@@ -119,7 +119,7 @@ public class ManageFormsActivity extends BaseActivity {
 		  }
 		});
 
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 		  public void onClick(DialogInterface dialog, int whichButton) {
 		    
 		  }

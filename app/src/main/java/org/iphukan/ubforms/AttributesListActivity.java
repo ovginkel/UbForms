@@ -43,7 +43,7 @@ public class AttributesListActivity extends BaseActivity {
 		attributes.addAll(getAttributes(currentEntity));
 		
 		Button btnAddAttribute = new Button(this);
-		btnAddAttribute.setText("Add Field");
+		btnAddAttribute.setText(R.string.add_field);
 		btnAddAttribute.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 			   addAttribute();
@@ -69,20 +69,20 @@ public class AttributesListActivity extends BaseActivity {
 	private void launchAttributeDetails(int position) {
 		Intent intent = new Intent(this, AttributeDetailsActivity.class);
 		intent.putExtra(ENTITY_NAME, currentEntity.getName());
-		intent.putExtra("position", position);
+		intent.putExtra(getString(R.string.position), position);
 		startActivity(intent);
 	}
 	
 	private void addAttribute() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setTitle("Add Field");
-		alert.setMessage("Enter new field name");
+		alert.setTitle(R.string.add_field);
+		alert.setMessage(R.string.enter_new_field_name);
 
 		final EditText input = new EditText(this);
 		alert.setView(input);
 
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			String name = input.getText().toString();
 			if (name.length() == 0) return;
@@ -106,7 +106,7 @@ public class AttributesListActivity extends BaseActivity {
 		  }
 		});
 
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 		  public void onClick(DialogInterface dialog, int whichButton) {
 		    
 		  }

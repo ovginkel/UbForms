@@ -55,7 +55,7 @@ public class BackupRestoreActivity extends BaseActivity {
 		rootView.setMinimumWidth(COL_MIN_WIDTH);
 
 		Button btnExport = new Button(this);
-		btnExport.setText("Backup to .csv files");
+		btnExport.setText(getString(R.string.backup_data_csv));
 		btnExport.setFocusableInTouchMode(true);
 		btnExport.requestFocus();
 		btnExport.setOnClickListener(new OnClickListener(){
@@ -66,7 +66,7 @@ public class BackupRestoreActivity extends BaseActivity {
 		rootView.addView(btnExport);
 
 		Button btnImport = new Button(this);
-		btnImport.setText("Restore data in .csv files");
+		btnImport.setText(getString(R.string.restore_data_csv));
 		btnImport.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				doImport();
@@ -83,19 +83,19 @@ public class BackupRestoreActivity extends BaseActivity {
 		rootView.addView(tv2);
 
 		Button btnDeleteEntity = new Button(this);
-		btnDeleteEntity.setText("Delete form");
+		btnDeleteEntity.setText(R.string.delete_form);
 		final Context context = this;
 		btnDeleteEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage("Are you sure you want to delete an entire form?")
+				builder.setMessage(getString(R.string.are_sure_delete_form))
 				.setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						doDeleteEntity();
 					}
 				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
@@ -112,23 +112,23 @@ public class BackupRestoreActivity extends BaseActivity {
 		rootView.addView(tv3);
 
 		Button btnImportForms = new Button(this);
-		btnImportForms.setText("Import forms");
+		btnImportForms.setText(R.string.import_forms);
 		btnImportForms.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage("ARE YOU SURE YOU WANT TO IMPORT AND REPLACE ALL FORM DEFINITIONS? (WARNING: This will replace all existing form fields)")
+				builder.setMessage(getString(R.string.are_sure_replace_all_form_defs))
 				.setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
-						builder.setMessage("Confirm: Replace all form definitions? (This may affect all data!)")
+						builder.setMessage(getString(R.string.confirm_all_form_defs))
 						.setCancelable(false)
-						.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								doImportForms();
 							}
 						})
-						.setNegativeButton("No", new DialogInterface.OnClickListener() {
+						.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 							}
@@ -138,7 +138,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 					}
 				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
@@ -157,8 +157,8 @@ public class BackupRestoreActivity extends BaseActivity {
 
 		final Context context = this;
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Delete form");
-		alert.setMessage("Select form to delete");
+		alert.setTitle(R.string.delete_form);
+		alert.setMessage(R.string.select_form_delete);
 		final Spinner sp = new Spinner(this);
 		final List<Entity> entities = getEntities();
 		final String[] names = new String[entities.size()];
@@ -172,7 +172,7 @@ public class BackupRestoreActivity extends BaseActivity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(adapter);
 		alert.setView(sp);
-		alert.setPositiveButton("Delete Form", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(getString(R.string.delete_form), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				int pos = sp.getSelectedItemPosition();
 				if (pos == Spinner.INVALID_POSITION) return;
@@ -180,9 +180,9 @@ public class BackupRestoreActivity extends BaseActivity {
 
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage("ARE YOU SURE YOU WANT TO DELETE THE ENTIRE FORM "+nameToDelete+"?")
+				builder.setMessage(getString(R.string.are_sure_delete_entire_form)+" "+nameToDelete+"?")
 				.setCancelable(true)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						for (Entity entity: entities) {
 							if (entity.getName().equals(nameToDelete)) {
@@ -193,13 +193,13 @@ public class BackupRestoreActivity extends BaseActivity {
 								} finally {
 									sqlHelper.close();
 								}
-								makeToast("Deleted form "+nameToDelete);
+								makeToast(getString(R.string.deleted_form)+" "+nameToDelete);
 								break;
 							}
 						}
 					}
 				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
@@ -210,7 +210,7 @@ public class BackupRestoreActivity extends BaseActivity {
 			}
 		});
 
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 
 			}
@@ -298,7 +298,7 @@ public class BackupRestoreActivity extends BaseActivity {
 		}
 
 		if (line.length < 4) {
-			throw new ParseException("Expected metadata fields missing", rowCount, entity);
+			throw new ParseException(getString(R.string.expected_metadata_fields_missing), rowCount, entity);
 		}
 
 		BlobData blobData = new BlobData();
@@ -414,7 +414,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 			doBlobExport();
 
-			makeToast(entities.size()+ " form data export files exported.");
+			makeToast(getString(R.string.data_files_exported,entities.size()));
 
 			doExportForms();
 
@@ -478,7 +478,7 @@ public class BackupRestoreActivity extends BaseActivity {
 				}
 			}
 
-			makeToast(entities.size()+ " form definition files exported.");
+			makeToast(getString(R.string.form_def_files_exported,entities.size()));
 
 		} catch (Exception e) {
 			makeToast(e.getMessage());
@@ -544,9 +544,9 @@ public class BackupRestoreActivity extends BaseActivity {
 									String colHeader = headerMap.get(attributeName);
 									if (!attributeName.equals(colHeader)) {
 										if (colHeader == null) {
-											throw new ParseException("Missing column "+attributeName, rowCount, entity);
+											throw new ParseException(getString(R.string.missing_column) +" "+attributeName, rowCount, entity);
 										} else {
-											throw new ParseException("Invalid column "+colHeader+", expected "+attributeName, rowCount, entity);
+											throw new ParseException(getString(R.string.invalid_column) +" " +colHeader+", "+ getString(R.string.expected) +" "+attributeName, rowCount, entity);
 										}
 									}
 								}
@@ -566,7 +566,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 			doBlobImport();
 
-			makeToast(fileCount+ " files imported.");
+			makeToast(getString(R.string.data_files_imported,fileCount));
 
 
 		} catch (Exception e) {
@@ -647,7 +647,7 @@ public class BackupRestoreActivity extends BaseActivity {
 				sqlHelper.close();
 			}
 
-			makeToast(fileCount+ " form definition files imported.");
+			makeToast(getString(R.string.form_def_files_imported,fileCount));
 
 
 		} catch (Exception e) {
@@ -668,7 +668,7 @@ public class BackupRestoreActivity extends BaseActivity {
 			line = line.trim();
 			concatLine = concatLine + "\n" + line;
 		}
-		if (!concatLine.endsWith("\"")) throw new ParseException("Invalid file format", rowCount, entity);
+		if (!concatLine.endsWith("\"")) throw new ParseException(getString(R.string.invalid_file_format), rowCount, entity);
 
 		List<String> fields = new ArrayList<String>();
 		boolean inQuote = false;
@@ -693,7 +693,7 @@ public class BackupRestoreActivity extends BaseActivity {
 					inQuote = true;
 				} else if (c == ',' || c == ' ') {
 				} else {
-					throw new ParseException("All fields must be in quotes", rowCount, entity);
+					throw new ParseException(getString(R.string.all_fields_quotes), rowCount, entity);
 				}
 			}
 		}
@@ -711,7 +711,7 @@ public class BackupRestoreActivity extends BaseActivity {
 		}
 
 		if (line.length != attributes.size()+1) {
-			throw new ParseException("Expected "+(attributes.size()+1)+" fields", rowCount, entity);
+			throw new ParseException(getString(R.string.expected_num_fields,attributes.size()+1), rowCount, entity);
 		}
 
 		Map<String, String> row = new HashMap<String, String>();
@@ -752,21 +752,21 @@ public class BackupRestoreActivity extends BaseActivity {
 			attribute.setValidationRegex(line[12]);
 			attribute.setValidationExample(line[13]);
 		} catch (Exception e) {
-			throw new ParseException("Invalid form definition data: "+e.getMessage(), rowCount, entity);
+			throw new ParseException(getString(R.string.invalid_form_def,e.getMessage()), rowCount, entity);
 		}
 
 		if (!entity.getName().equals(attribute.getEntityName())) {
-			throw new ParseException("Invalid entity name:", rowCount, entity);
+			throw new ParseException(getString(R.string.invalid_entity_name), rowCount, entity);
 		}
 
 		return attribute;
 
 	}
 
-	public static final class ParseException extends RuntimeException {
+	public final class ParseException extends RuntimeException {
 		private static final long serialVersionUID = 1L;
 		public ParseException(String message, int rowCount, Entity entity) {
-			super(message + " on line "+rowCount+" of .csv data file for "+entity.getName());
+			super(getString(R.string.parse_exception_message,message,rowCount,entity.getName()));
 		}
 	}
 

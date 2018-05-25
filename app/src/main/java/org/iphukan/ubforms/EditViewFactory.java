@@ -102,7 +102,7 @@ public class EditViewFactory {
 			tv.setText(value);
 			dp.addView(tv);
 			Button ed = new Button(activity);
-			ed.setText("Choose Date");
+			ed.setText(R.string.date);
 			ed.setOnClickListener(new DateEditClickListener(activity, tv));
 			dp.addView(ed);
 			view = dp;
@@ -117,7 +117,7 @@ public class EditViewFactory {
 			tv.setText(value);
 			dp.addView(tv);
 			Button ed = new Button(activity);
-			ed.setText("Choose Time");
+			ed.setText(R.string.time);
 			ed.setOnClickListener(new TimeEditClickListener(activity, tv));
 			dp.addView(ed);
 			view = dp;
@@ -153,7 +153,7 @@ public class EditViewFactory {
 			}
 			dp.addView(tvDesc);
 			Button ed = new Button(activity);
-			ed.setText("Search");
+			ed.setText(R.string.search_);
 			Entity refEntity = new Entity();
 			refEntity.setName(attribute.getRefEntityName());
 			ed.setOnClickListener(new ReferenceEditClickListener(activity, refEntity, attribute.getAttributeName()));
@@ -200,7 +200,7 @@ public class EditViewFactory {
 				fEntity.setValues(fvalues);
 
 				Button bv = new Button(activity);
-				bv.setText("Edit");
+				bv.setText(R.string.edit);
 				bv.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						activity.startEdit(fEntity);
@@ -264,7 +264,7 @@ public class EditViewFactory {
 						Bitmap bm = BitmapFactory.decodeByteArray(b, 0, b.length);
 						imImage.setImageBitmap(bm);
 					} catch (Exception e) {
-						Log.e(TAG, "Unable to display image "+e.getMessage());
+						Log.e(TAG, this.activity.getString(R.string.unable_display_image)+" "+e.getMessage());
 					}
 				}
 				dp.addView(imImage);
@@ -275,7 +275,7 @@ public class EditViewFactory {
 			dp.addView(dp2);
 
 			Button ed = new Button(activity);
-			ed.setText("Choose File");
+			ed.setText(this.activity.getString(R.string.file));
 			Entity refEntity = new Entity();
 			refEntity.setName(attribute.getRefEntityName());
 			ed.setOnClickListener(new ChooseFileClickListener(activity, refEntity, attribute.getAttributeName()));
@@ -283,7 +283,7 @@ public class EditViewFactory {
 
 			if (blobData.getBlobData() != null) {
 				Button dl = new Button(activity);
-				dl.setText("Save copy");
+				dl.setText(this.activity.getString(R.string.save_copy));
 				final BlobData fblobData = blobData;
 				dl.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
@@ -320,7 +320,7 @@ public class EditViewFactory {
 			String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + blobData.getFileName();
 			File file = new File(filePath);
 			if (file.exists()) {
-				activity.makeToast("File already exists: "+filePath);
+				activity.makeToast(this.activity.getString(R.string.file_already_exists) + ": " + filePath);
 				return;
 				//file.delete(); // add conf dialog?
 			}
@@ -331,9 +331,9 @@ public class EditViewFactory {
 			} finally {
 				fout.close();
 			}
-			activity.makeToast("File saved "+file.getAbsolutePath());
+			activity.makeToast(R.string.file_saved+" "+file.getAbsolutePath());
 		} catch (Exception e) {
-			activity.makeToast("Unable to save file: "+e.getMessage());
+			activity.makeToast(this.activity.getString(R.string.unable_save_file)+": "+e.getMessage());
 		}
 	}
 

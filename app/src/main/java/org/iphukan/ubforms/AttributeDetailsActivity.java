@@ -43,7 +43,7 @@ public class AttributeDetailsActivity extends BaseActivity {
 		setContentView(fieldDetails);
 		
 		Button btnSave = new Button(this);
-		btnSave.setText("Save Field Definition");
+		btnSave.setText(R.string.save_field_def);
 		btnSave.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				saveFieldDetails();
@@ -52,19 +52,19 @@ public class AttributeDetailsActivity extends BaseActivity {
 		fieldDetails.addView(btnSave);
 		
 		TextView tvFieldName = new TextView(this);
-		tvFieldName.setText("Field Name");
+		tvFieldName.setText(R.string.field_name);
 		fieldDetails.addView(tvFieldName);
 		etFieldName = new EditText(this);
 		fieldDetails.addView(etFieldName);
 
 		TextView tvFieldDescription = new TextView(this);
-		tvFieldDescription.setText("Field Description");
+		tvFieldDescription.setText(R.string.field_desc);
 		fieldDetails.addView(tvFieldDescription);
 		etFieldDescription = new EditText(this);
 		fieldDetails.addView(etFieldDescription);
 
 		TextView tvDatatype = new TextView(this);
-		tvDatatype.setText("Data type");
+		tvDatatype.setText(R.string.data_type);
 		fieldDetails.addView(tvDatatype);
 		spDatatype = new Spinner(this);
 		ArrayAdapter<CharSequence> adapter = 
@@ -76,45 +76,45 @@ public class AttributeDetailsActivity extends BaseActivity {
     	fieldDetails.addView(spDatatype);
     	
 		TextView tvRefType = new TextView(this);
-		tvRefType.setText("Form name (if reference type), or Form name Field name (if referencedBy type)");
+		tvRefType.setText(R.string.ref_type_explain);
 		fieldDetails.addView(tvRefType);
 		etRefType = new EditText(this);
 		fieldDetails.addView(etRefType);
 
     	cbKey = new CheckBox(this);
-    	cbKey.setText("Key");
+    	cbKey.setText(R.string.key);
     	fieldDetails.addView(cbKey);
 		
     	cbRequired = new CheckBox(this);
-    	cbRequired.setText("Required");
+    	cbRequired.setText(R.string.required);
     	fieldDetails.addView(cbRequired);
 		
     	cbSearchable = new CheckBox(this);
-    	cbSearchable.setText("Search");
+    	cbSearchable.setText(R.string.cap_search);
     	fieldDetails.addView(cbSearchable);
 		
     	cbListable = new CheckBox(this);
-    	cbListable.setText("List");
+    	cbListable.setText(R.string.list);
     	fieldDetails.addView(cbListable);
 		
     	cbEntityDescription = new CheckBox(this);
-    	cbEntityDescription.setText("Short Desc");
+    	cbEntityDescription.setText(R.string.short_desc);
     	fieldDetails.addView(cbEntityDescription);
 		
 		TextView tvChoices = new TextView(this);
-		tvChoices.setText("Choices");
+		tvChoices.setText(R.string.choices);
 		fieldDetails.addView(tvChoices);
 		etChoices = new EditText(this);
 		fieldDetails.addView(etChoices);
 
 		TextView tvValidation = new TextView(this);
-		tvValidation.setText("Validation regex");
+		tvValidation.setText(R.string.val_regex);
 		fieldDetails.addView(tvValidation);
 		etValidationRegex = new EditText(this);
 		fieldDetails.addView(etValidationRegex);
     	
 		TextView tvExample = new TextView(this);
-		tvExample.setText("Validation example");
+		tvExample.setText(R.string.val_example);
 		fieldDetails.addView(tvExample);
 		etValidationExample = new EditText(this);
 		fieldDetails.addView(etValidationExample);
@@ -147,7 +147,7 @@ public class AttributeDetailsActivity extends BaseActivity {
 		
 		try {
 			currentAttribute = new AttributeDao(sqlHelper.getWritableDatabase()).save(currentAttribute);
-			makeToast("Saved.");
+			makeToast(getString(R.string.saved));
 			finish();
 		} finally {
 			sqlHelper.close();

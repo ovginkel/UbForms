@@ -97,13 +97,13 @@ public class EnterDataActivity extends BaseActivity {
 
 		TextView tvHeader = new TextView(this);
 		String sid = mValues.get("_id");
-		tvHeader.setText(mEntity.getName() + " ( " +(sid == null ? "New" : ("Id " + sid)) + " )");
 		tvHeader.setTextSize(30);
+		tvHeader.setText(mEntity.getName() + " ( " +(sid == null ? getString(R.string.new_) : (getString(R.string.id)+" " + sid)) + " )");
 		rootView.addView(tvHeader);
 
 
 		Button btnSaveEntity = new Button(this);
-		btnSaveEntity.setText("Save");
+		btnSaveEntity.setText(getString(R.string.save));
 		btnSaveEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				saveEntity();
@@ -147,20 +147,20 @@ public class EnterDataActivity extends BaseActivity {
 		}
 
 		Button btnDeleteEntity = new Button(this);
-		btnDeleteEntity.setText("Delete");
+		btnDeleteEntity.setText(getString(R.string.delete));
 		btnDeleteEntity.setBackgroundColor(Color.parseColor("#A00000"));
 		final Context context = this;
 		btnDeleteEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage("Are you sure you want to delete this item?")
+				builder.setMessage(getString(R.string.are_sure_delete_item))
 				.setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						deleteEntity();
 					}
 				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
@@ -246,7 +246,7 @@ public class EnterDataActivity extends BaseActivity {
 			SQLiteDatabase database = sqlHelper.getWritableDatabase();
 			DataDao dataDao = new DataDao(database);
 			mValues = dataDao.saveEntityData(mEntityName, mValues);
-			makeToast("Saved.");
+			makeToast(getString(R.string.saved));
 		} finally {
 			sqlHelper.close();
 		}
@@ -288,7 +288,7 @@ public class EnterDataActivity extends BaseActivity {
 				in.close();
 			}
 		} catch (Exception e) {
-			makeToast("Unable to read file "+filePath+" "+e.getMessage());
+			makeToast(getString(R.string.unable_read_file, filePath, e.getMessage()));
 			return null;
 		}
 	}
@@ -301,7 +301,7 @@ public class EnterDataActivity extends BaseActivity {
 			String id = mValues.get("_id");
 			if (id == null || id.equals("0")) return;
 			dataDao.deleteEntityData(mEntityName, Long.parseLong(id));
-			makeToast("Deleted.");
+			makeToast(getString(R.string.deleted));
 		} finally {
 			sqlHelper.close();
 		}
@@ -348,7 +348,7 @@ public class EnterDataActivity extends BaseActivity {
 
 				File file = new File(filePath);
 				if (file.length() > 5000000) {
-					makeToast("File size too large");
+					makeToast(getString(R.string.file_size_too_large));
 					return;
 				}
 
@@ -381,7 +381,7 @@ public class EnterDataActivity extends BaseActivity {
 						((TextView)display).setText(fileName);
 					}
 				} catch (Exception e) {
-					Log.e(TAG, "Cannot update display "+e.getMessage());
+					Log.e(TAG, getString(R.string.cannot_update_display, e.getMessage()));
 				}
 
 			}
@@ -406,7 +406,7 @@ public class EnterDataActivity extends BaseActivity {
 			return baos.toByteArray();
 
 		} catch(Exception ex) {
-			makeToast("Cannot create image thumbnail "+ex.getMessage());
+			makeToast(getString(R.string.cannot_image_thumbnail,ex.getMessage()));
 			return null;
 		}
 

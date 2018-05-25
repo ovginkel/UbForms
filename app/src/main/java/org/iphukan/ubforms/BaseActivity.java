@@ -32,12 +32,6 @@ public class BaseActivity extends Activity {
     public static final String SELECT_MODE_SELECT = "select";
 	public static String FILE_NAME = "_fileName";
 
-
-
-	public static final String MANAGE_FORMS = "Manage Forms";
-	public static final String SEARCH_DATA = "Search / Enter Data";
-	public static final String BACKUP_RESTORE = "Backup / Restore";
-
 	protected int COL_MIN_WIDTH = 300;
 
 	protected UrSqlHelper sqlHelper;
@@ -65,9 +59,9 @@ public class BaseActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
-		menu.add(MANAGE_FORMS);
-		menu.add(SEARCH_DATA);
-		menu.add(BACKUP_RESTORE);
+		menu.add(R.string.menu_manage_forms);
+		menu.add(R.string.menu_search_enter_data);
+		menu.add(R.string.menu_backup_restore);
 		return true;
 	}
 
@@ -75,13 +69,13 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		String title = item.getTitle().toString();
-		if (title.equals(MANAGE_FORMS)) {
+		if (title.equals(getString(R.string.menu_manage_forms))) {
 			startActivity(new Intent(this, ManageFormsActivity.class));
 			return true;
-		} else if (title.equals(SEARCH_DATA)) {
+		} else if (title.equals(getString(R.string.menu_search_enter_data))) {
 			startActivity(new Intent(this, SearchDataActivity.class));
 			return true;
-		} else if (title.equals(BACKUP_RESTORE)) {
+		} else if (title.equals(getString(R.string.menu_backup_restore))) {
 			startActivity(new Intent(this, BackupRestoreActivity.class));
 			return true;
 		} else {

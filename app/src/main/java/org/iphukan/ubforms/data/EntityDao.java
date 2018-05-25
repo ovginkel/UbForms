@@ -1,4 +1,4 @@
-package com.threedlite.urforms.data;
+package org.iphukan.ubforms.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,9 +82,13 @@ public class EntityDao {
 
 	public void delete(Entity entity) {
 		long id = entity.getId();
+        String name = entity.getName();
 		System.out.println("Entity deleted with id: " + id);
+        //Delete entity
 		database.delete(TABLE_NAME, 
-				"_id = " + id, null);
+				"_id = ? OR entity_name = ?", new String[]{Long.toString(id),name});
+        //Delete related fields
+        database.execSQL("VACUUM;");
 	}
 
 }

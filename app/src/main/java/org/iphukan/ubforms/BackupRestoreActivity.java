@@ -29,13 +29,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.AttributeDao;
-import com.threedlite.urforms.data.BlobData;
-import com.threedlite.urforms.data.BlobDataDao;
-import com.threedlite.urforms.data.DataDao;
-import com.threedlite.urforms.data.Entity;
-import com.threedlite.urforms.data.EntityDao;
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.AttributeDao;
+import org.iphukan.ubforms.data.BlobData;
+import org.iphukan.ubforms.data.BlobDataDao;
+import org.iphukan.ubforms.data.DataDao;
+import org.iphukan.ubforms.data.Entity;
+import org.iphukan.ubforms.data.EntityDao;
 
 
 public class BackupRestoreActivity extends BaseActivity {
@@ -48,7 +48,7 @@ public class BackupRestoreActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		storagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/urforms";
+		storagePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ubforms";
 
 		LinearLayout rootView = new LinearLayout(this);
 		rootView.setOrientation(LinearLayout.VERTICAL);
@@ -188,6 +188,8 @@ public class BackupRestoreActivity extends BaseActivity {
 							if (entity.getName().equals(nameToDelete)) {
 								try {
 									new EntityDao(sqlHelper.getWritableDatabase()).delete(entity);
+                                    new AttributeDao(sqlHelper.getWritableDatabase()).deleteAttributesForEntity(entity);
+                                    new DataDao(sqlHelper.getWritableDatabase()).deleteDataForEntity(entity);
 								} finally {
 									sqlHelper.close();
 								}

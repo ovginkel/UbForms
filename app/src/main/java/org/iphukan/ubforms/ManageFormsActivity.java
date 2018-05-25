@@ -1,7 +1,4 @@
-package com.threedlite.urforms;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.iphukan.ubforms;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,9 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import com.threedlite.urforms.data.Entity;
-import com.threedlite.urforms.data.EntityDao;
-import com.threedlite.urforms.data.SampleDataPopulator;
+
+import org.iphukan.ubforms.data.Entity;
+import org.iphukan.ubforms.data.EntityDao;
+import org.iphukan.ubforms.data.SampleDataPopulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManageFormsActivity extends BaseActivity {
 

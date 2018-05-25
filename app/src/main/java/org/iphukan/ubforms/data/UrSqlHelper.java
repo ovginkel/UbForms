@@ -1,4 +1,4 @@
-package com.threedlite.urforms.data;
+package org.iphukan.ubforms.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class UrSqlHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "urforms.db";
+	private static final String DATABASE_NAME = "ubforms.db";
 	private static final int DATABASE_VERSION = 1;
 
 

@@ -27,7 +27,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.threedlite.urforms.R;
+import org.iphukan.ubforms.R;
 
 /**
  * @author paulburke (ipaulpro)

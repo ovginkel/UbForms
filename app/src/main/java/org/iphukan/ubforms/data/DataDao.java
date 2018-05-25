@@ -1,19 +1,18 @@
-package com.threedlite.urforms.data;
+package org.iphukan.ubforms.data;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 public class DataDao {
 	
-	private static final String TAG = "urforms_DataDao";
+	private static final String TAG = "ubforms_DataDao";
 	
 	private SQLiteDatabase database;
 
@@ -142,6 +141,16 @@ public class DataDao {
 		long id = data.getId();
 		database.delete(TABLE_NAME, "_id = " + id, null);
 	}
+
+    public void deleteDataForEntity(Entity entity) {
+            String name = entity.getName();
+            System.out.println("Data for entity deleted with name: " + name);
+            //Delete entity
+            database.delete(TABLE_NAME,
+                    "entity_name = ?", new String[]{name});
+            //Delete related fields
+            database.execSQL("VACUUM;");
+    }
 	
 	public static final String ID = "_id";
 	

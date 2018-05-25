@@ -1,4 +1,4 @@
-package com.threedlite.urforms.data;
+package org.iphukan.ubforms.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,4 +135,14 @@ public class AttributeDao {
 		database.delete(TABLE_NAME, 
 				"_id = " + id, null);
 	}
+
+    public void deleteAttributesForEntity(Entity entity) {
+        String name = entity.getName();
+        System.out.println("Attributes for entity deleted with name: " + name);
+        //Delete entity
+        database.delete(TABLE_NAME,
+                "entity_name = ?", new String[]{name});
+        //Delete related fields
+        database.execSQL("VACUUM;");
+    }
 }

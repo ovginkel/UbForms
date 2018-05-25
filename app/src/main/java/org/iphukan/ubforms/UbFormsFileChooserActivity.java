@@ -1,13 +1,13 @@
-package com.threedlite.urforms;
-
-import java.io.File;
+package org.iphukan.ubforms;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.ipaulpro.afilechooser.FileChooserActivity;
 
-public class UrformsFileChooserActivity extends FileChooserActivity {
+import java.io.File;
+
+public class UbFormsFileChooserActivity extends FileChooserActivity {
 
 	private String mAttributeName;
 	private String mFilePath;

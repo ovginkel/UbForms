@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
     public static final String SELECT_MODE_SELECT = "select";
 	public static String FILE_NAME = "_fileName";
 
-	protected int COL_MIN_WIDTH = 300;
+	public static int COL_MIN_WIDTH = 300;
 
 	protected UrSqlHelper sqlHelper;
 
@@ -160,7 +160,7 @@ public class BaseActivity extends Activity {
 
 	public String getTitle(String refEntityName, Long entityId, String suppressAttribute) {
 
-		if (entityId == null || entityId.equals(0)) return "";
+		if (entityId == null || entityId.equals((long)(0))) return "";
 
 		try {
 			SQLiteDatabase database = sqlHelper.getWritableDatabase();
@@ -180,7 +180,7 @@ public class BaseActivity extends Activity {
 						if (attribute.getDataType().equals(Attribute.REF_TYPE)) {
 							v = getTitle(attribute.getRefEntityName(), Long.valueOf(v), null);
 						}
-						sb.append(v + " ");
+						sb.append(v).append(" ");
 					}
 				}
 			}

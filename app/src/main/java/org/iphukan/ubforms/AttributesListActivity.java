@@ -23,8 +23,7 @@ import java.util.List;
 
 public class AttributesListActivity extends BaseActivity {
 	LinearLayout attributesListLayout;
-	private List<Attribute> attributes = new ArrayList<Attribute>();
-	private ArrayAdapter<Attribute> attributeAdapter = null;
+	private List<Attribute> attributes = new ArrayList<>();
 	private Entity currentEntity;
 
 	@Override
@@ -33,7 +32,6 @@ public class AttributesListActivity extends BaseActivity {
 		
 		attributesListLayout = new LinearLayout(this);
 		attributesListLayout.setOrientation(LinearLayout.VERTICAL);
-		
 		setContentView(attributesListLayout);
 		Bundle bundle = getIntent().getExtras();
 
@@ -52,7 +50,7 @@ public class AttributesListActivity extends BaseActivity {
 		attributesListLayout.addView(btnAddAttribute);
 
 		ListView attributelist = new ListView(this);
-		attributeAdapter = new ArrayAdapter<Attribute>(this,
+		ArrayAdapter<Attribute> attributeAdapter = new ArrayAdapter<>(this,
 				android.R.layout.simple_list_item_1,
 				android.R.id.text1,
 				attributes);
@@ -89,9 +87,11 @@ public class AttributesListActivity extends BaseActivity {
 			int maxOrder = 0;
 			for (Attribute attribute: attributes) {
 				if (attribute.getAttributeName().equals(name)) return; // duplicate
-				if (attribute.getDisplayOrder() > maxOrder) maxOrder = attribute.getDisplayOrder();
+				if (attribute.getDisplayOrder() > maxOrder) {
+					maxOrder = attribute.getDisplayOrder();
+				}
 			}
-		  
+
 		  	Attribute attribute = new Attribute();
 		  	attribute.setAttributeName(name);
 		  	attribute.setAttributeDesc(name);

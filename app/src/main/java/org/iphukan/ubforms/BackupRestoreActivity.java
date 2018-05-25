@@ -388,7 +388,7 @@ public class BackupRestoreActivity extends BaseActivity {
 					SQLiteDatabase database = sqlHelper.getWritableDatabase();
 					DataDao dataDao = new DataDao(database);
 					try {
-						List<Map<String, String>> results = dataDao.search(entity, new HashMap<String, String>());
+						List<Map<String, String>> results = dataDao.searchNoLimits(entity, new HashMap<String, String>());
 						for (Map<String, String> row: results) {
 							out.write("\""+row.get("_id")+"\"");
 							for (Attribute attribute: attributes) {

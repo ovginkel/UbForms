@@ -56,6 +56,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 		Button btnExport = new Button(this);
 		btnExport.setText(getString(R.string.backup_data_csv));
+        btnExport.setTextSize(TEXT_SIZE_LARGE);
 		btnExport.setFocusableInTouchMode(true);
 		btnExport.requestFocus();
 		btnExport.setOnClickListener(new OnClickListener(){
@@ -67,6 +68,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 		Button btnImport = new Button(this);
 		btnImport.setText(getString(R.string.restore_data_csv));
+        btnImport.setTextSize(TEXT_SIZE_LARGE);
 		btnImport.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				doImport();
@@ -84,6 +86,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 		Button btnDeleteEntity = new Button(this);
 		btnDeleteEntity.setText(R.string.delete_form);
+        btnDeleteEntity.setTextSize(TEXT_SIZE_LARGE);
 		final Context context = this;
 		btnDeleteEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
@@ -113,6 +116,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
 		Button btnImportForms = new Button(this);
 		btnImportForms.setText(R.string.import_forms);
+        btnImportForms.setTextSize(TEXT_SIZE_LARGE);
 		btnImportForms.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);

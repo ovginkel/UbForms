@@ -33,6 +33,9 @@ public class BaseActivity extends Activity {
 	public static String FILE_NAME = "_fileName";
 
 	public static int COL_MIN_WIDTH = 300;
+	public static int TEXT_SIZE_SMALL = 7;
+	public static int TEXT_SIZE_MEDIUM = 9;
+	public static int TEXT_SIZE_LARGE = 11;
 
 	protected UrSqlHelper sqlHelper;
 

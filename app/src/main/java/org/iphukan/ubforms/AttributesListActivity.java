@@ -1,25 +1,25 @@
-package com.threedlite.urforms;
+package org.iphukan.ubforms;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.AttributeDao;
-import com.threedlite.urforms.data.Entity;
-
-import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.AttributeDao;
+import org.iphukan.ubforms.data.Entity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AttributesListActivity extends BaseActivity {
 	LinearLayout attributesListLayout;

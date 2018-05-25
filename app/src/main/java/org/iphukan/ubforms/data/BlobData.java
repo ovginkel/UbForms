@@ -1,4 +1,4 @@
-package com.threedlite.urforms.data;
+package org.iphukan.ubforms.data;
 
 
 public class BlobData {

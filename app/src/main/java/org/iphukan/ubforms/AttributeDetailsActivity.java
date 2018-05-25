@@ -1,8 +1,8 @@
-package com.threedlite.urforms;
+package org.iphukan.ubforms;
 
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.AttributeDao;
-import com.threedlite.urforms.data.Entity;
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.AttributeDao;
+import org.iphukan.ubforms.data.Entity;
 
 import android.os.Bundle;
 import android.view.View;

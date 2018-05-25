@@ -28,7 +28,7 @@ import android.provider.MediaStore.Audio;
 import android.provider.MediaStore.Video;
 import android.util.Log;
 
-import com.threedlite.urforms.R;
+import org.iphukan.ubforms.R;
 
 /**
  * @version 2009-07-03

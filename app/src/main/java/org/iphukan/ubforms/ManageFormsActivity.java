@@ -44,10 +44,13 @@ public class ManageFormsActivity extends BaseActivity {
 		
 		LinearLayout entityLayout = new LinearLayout(this);
 		entityLayout.setOrientation(LinearLayout.VERTICAL);
+		entityLayout.setMinimumWidth(COL_MIN_WIDTH);
+
 		parent.addView(entityLayout);
 		
 		Button btnAddEntity = new Button(this);
 		btnAddEntity.setText(getString(R.string.add_form));
+		btnAddEntity.setTextSize(TEXT_SIZE_LARGE);
 		btnAddEntity.requestFocus();
 		btnAddEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {

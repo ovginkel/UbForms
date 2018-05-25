@@ -38,10 +38,12 @@ public class AttributeDetailsActivity extends BaseActivity {
 		
 		LinearLayout fieldDetails = new LinearLayout(this);
 		fieldDetails.setOrientation(LinearLayout.VERTICAL);
+        fieldDetails.setMinimumWidth(COL_MIN_WIDTH);
 		setContentView(fieldDetails);
 		
 		Button btnSave = new Button(this);
 		btnSave.setText(R.string.save_field_def);
+		btnSave.setTextSize(TEXT_SIZE_LARGE);
 		btnSave.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				saveFieldDetails();

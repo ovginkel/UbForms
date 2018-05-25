@@ -93,17 +93,19 @@ public class EnterDataActivity extends BaseActivity {
 
 		LinearLayout rootView = new LinearLayout(this);
 		rootView.setOrientation(LinearLayout.VERTICAL);
+		rootView.setMinimumWidth(COL_MIN_WIDTH);
 
 
 		TextView tvHeader = new TextView(this);
 		String sid = mValues.get("_id");
-		tvHeader.setTextSize(30);
 		tvHeader.setText(mEntity.getName() + " ( " +(sid == null ? getString(R.string.new_) : (getString(R.string.id)+" " + sid)) + " )");
+		tvHeader.setTextSize(TEXT_SIZE_LARGE);
 		rootView.addView(tvHeader);
 
 
 		Button btnSaveEntity = new Button(this);
 		btnSaveEntity.setText(getString(R.string.save));
+		btnSaveEntity.setTextSize(TEXT_SIZE_LARGE);
 		btnSaveEntity.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				saveEntity();
@@ -133,12 +135,13 @@ public class EnterDataActivity extends BaseActivity {
 			}
 
 			LinearLayout cell = new LinearLayout(this);
-			cell.setPadding(5, 5, 5, 5);
+			cell.setPadding(2, 2, 2, 2);
 			cell.setOrientation(LinearLayout.VERTICAL);
 			tr.addView(cell);
 
 			TextView tvDesc = new TextView(this);
 			tvDesc.setText(attribute.getAttributeDesc());
+			tvDesc.setTextSize(TEXT_SIZE_LARGE);
 			cell.addView(tvDesc);
 
 			String value = mValues.get(attribute.getAttributeName());
@@ -148,6 +151,7 @@ public class EnterDataActivity extends BaseActivity {
 
 		Button btnDeleteEntity = new Button(this);
 		btnDeleteEntity.setText(getString(R.string.delete));
+		btnDeleteEntity.setTextSize(TEXT_SIZE_LARGE);
 		btnDeleteEntity.setBackgroundColor(Color.parseColor("#A00000"));
 		final Context context = this;
 		btnDeleteEntity.setOnClickListener(new OnClickListener(){

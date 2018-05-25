@@ -32,6 +32,8 @@ public class AttributesListActivity extends BaseActivity {
 		
 		attributesListLayout = new LinearLayout(this);
 		attributesListLayout.setOrientation(LinearLayout.VERTICAL);
+		attributesListLayout.setMinimumWidth(COL_MIN_WIDTH);
+
 		setContentView(attributesListLayout);
 		Bundle bundle = getIntent().getExtras();
 
@@ -42,6 +44,7 @@ public class AttributesListActivity extends BaseActivity {
 		
 		Button btnAddAttribute = new Button(this);
 		btnAddAttribute.setText(R.string.add_field);
+		btnAddAttribute.setTextSize(TEXT_SIZE_LARGE);
 		btnAddAttribute.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 			   addAttribute();

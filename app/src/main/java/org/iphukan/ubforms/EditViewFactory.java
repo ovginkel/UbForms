@@ -98,11 +98,12 @@ public class EditViewFactory {
 			LinearLayout dp = new LinearLayout(activity);
 			dp.setOrientation(LinearLayout.HORIZONTAL);
 			TextView tv = new TextView(activity);
-			tv.setTextSize(20);
+			tv.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			tv.setText(value);
 			dp.addView(tv);
 			Button ed = new Button(activity);
 			ed.setText(R.string.date);
+			ed.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			ed.setOnClickListener(new DateEditClickListener(activity, tv));
 			dp.addView(ed);
 			view = dp;
@@ -113,11 +114,12 @@ public class EditViewFactory {
 			LinearLayout dp = new LinearLayout(activity);
 			dp.setOrientation(LinearLayout.HORIZONTAL);
 			TextView tv = new TextView(activity);
-			tv.setTextSize(20);
+			tv.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			tv.setText(value);
 			dp.addView(tv);
 			Button ed = new Button(activity);
 			ed.setText(R.string.time);
+			ed.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			ed.setOnClickListener(new TimeEditClickListener(activity, tv));
 			dp.addView(ed);
 			view = dp;
@@ -126,7 +128,7 @@ public class EditViewFactory {
 		} else if (dataType.equals(Attribute.EDIT_TIMESTAMP_TYPE)) {
 
 			TextView tv = new TextView(activity);
-			tv.setTextSize(15);
+			tv.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			tv.setText(value);
 			view = tv;
 
@@ -137,14 +139,17 @@ public class EditViewFactory {
 
 			TextView tv1 = new TextView(activity);
 			tv1.setText("(");
+			tv1.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			dp.addView(tv1);
 
 			TextView tv = new TextView(activity);
 			tv.setText(value);
+			tv.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			dp.addView(tv);
 
 			TextView tv2 = new TextView(activity);
 			tv2.setText(") ");
+			tv2.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			dp.addView(tv2);
 
 			TextView tvDesc = new TextView(activity);
@@ -154,6 +159,7 @@ public class EditViewFactory {
 			dp.addView(tvDesc);
 			Button ed = new Button(activity);
 			ed.setText(R.string.search_);
+			ed.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			Entity refEntity = new Entity();
 			refEntity.setName(attribute.getRefEntityName());
 			ed.setOnClickListener(new ReferenceEditClickListener(activity, refEntity, attribute.getAttributeName()));
@@ -201,6 +207,7 @@ public class EditViewFactory {
 
 				Button bv = new Button(activity);
 				bv.setText(R.string.edit);
+				bv.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 				bv.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						activity.startEdit(fEntity);
@@ -226,6 +233,7 @@ public class EditViewFactory {
 			table.addView(tablerow);
 			Button bv = new Button(activity);
 			bv.setText("+");
+			bv.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			bv.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					activity.startEdit(fEntity);
@@ -255,6 +263,7 @@ public class EditViewFactory {
 			if (dataType.equals(Attribute.FILE_TYPE)) {
 				tvFileName = new TextView(activity);
 				tvFileName.setText(blobData.getFileName());
+				tvFileName.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 				dp.addView(tvFileName);
 			} else {
 				imImage = new ImageView(activity);
@@ -276,6 +285,7 @@ public class EditViewFactory {
 
 			Button ed = new Button(activity);
 			ed.setText(this.activity.getString(R.string.file));
+			ed.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 			Entity refEntity = new Entity();
 			refEntity.setName(attribute.getRefEntityName());
 			ed.setOnClickListener(new ChooseFileClickListener(activity, refEntity, attribute.getAttributeName()));
@@ -284,6 +294,7 @@ public class EditViewFactory {
 			if (blobData.getBlobData() != null) {
 				Button dl = new Button(activity);
 				dl.setText(this.activity.getString(R.string.save_copy));
+				dl.setTextSize(BaseActivity.TEXT_SIZE_LARGE);
 				final BlobData fblobData = blobData;
 				dl.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {

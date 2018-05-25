@@ -1,4 +1,4 @@
-package com.threedlite.urforms;
+package org.iphukan.ubforms;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,16 +32,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.BlobData;
-import com.threedlite.urforms.data.BlobDataDao;
-import com.threedlite.urforms.data.DataDao;
-import com.threedlite.urforms.data.Entity;
-import com.threedlite.urforms.data.UrSqlHelper;
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.BlobData;
+import org.iphukan.ubforms.data.BlobDataDao;
+import org.iphukan.ubforms.data.DataDao;
+import org.iphukan.ubforms.data.Entity;
+import org.iphukan.ubforms.data.UrSqlHelper;
 
 public class EditViewFactory {
 	
-	private static final String TAG = "urforms_EditViewFactory";
+	private static final String TAG = "ubforms_EditViewFactory";
 	
 	private BaseActivity activity;
 	private UrSqlHelper sqlHelper;
@@ -364,7 +364,7 @@ public class EditViewFactory {
 			List<Map<String, String>> results;
 			DataDao dataDao = new DataDao(sqlHelper.getWritableDatabase());
 			try {
-				results = dataDao.search(refEntity, refValues);
+				results = dataDao.searchExact(refEntity, refValues);
 			} finally {
 				sqlHelper.close();
 			}
@@ -391,7 +391,7 @@ public class EditViewFactory {
 	}
 
 	protected static void startChooseFileForResult(Activity activity, Entity entity, String attributeName) {
-		Intent intent = new Intent(activity, UrformsFileChooserActivity.class);
+		Intent intent = new Intent(activity, UbFormsFileChooserActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString(EnterDataActivity.ENTITY_NAME, entity.getName());
 		bundle.putString(EnterDataActivity.ATTRIBUTE_NAME, attributeName);

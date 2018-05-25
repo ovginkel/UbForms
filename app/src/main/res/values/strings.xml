@@ -1,17 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">URforms Database</string>
-    <string name="title_activity_search_data">URForms</string>
-    <string name="title_activity_search_results">URForms - Search Results</string>
-    <string name="title_activity_enter_data">URForms - Enter Data</string>
-    <string name="title_activity_manage_forms">URForms - Manage Forms</string>
-    <string name="title_activity_backup_restore">URForms - Backup / Resore</string>
+    <string name="app_name">UbForms Database</string>
+    <string name="title_activity_search_data">UbForms - Search Data</string>
+    <string name="title_activity_search_results">UbForms - Search Results</string>
+    <string name="title_activity_manage_forms">UbForms - Manage Forms</string>
+    <string name="title_activity_enter_data">UbForms - Enter Data</string>
+    <string name="title_activity_backup_restore">UbForms - Backup / Restore</string>
+
+
+    <string name="menu_manage_forms">Manage Forms</string>
+    <string name="menu_search_enter_data">Search / Enter Data</string>
+    <string name="menu_backup_restore">Backup / Restore</string>
 
     <!-- aFileChooser -->
     <string name="select_file">Choose file</string>
-    <string name="title_activity_search_view">URForms - Search / Enter Data</string>
-    <string name="title_activity_attributes_list">URForms - Attributes list</string>
-    <string name="title_activity_attribute_details">URForms - Attribute Details</string>
+    <string name="title_activity_search_view">UbForms - Search / Enter Data</string>
+    <string name="title_activity_edit_data">UbForms - Edit Data</string>
+    <string name="title_activity_attributes_list">UbForms - Attributes list</string>
+    <string name="title_activity_attribute_details">UbForms - Attribute Details</string>
 
+    <!-- UI strings -->
+    <string name="entity_arrow">%1$s &gt;</string>
+    <string name="refresh">Refresh</string>
+    <string name="val_example">Validation Example</string>
+    <string name="val_regex">Validation RegEx</string>
+    <string name="choices">Choices</string>
+    <string name="short_desc">Short Desc.</string>
+    <string name="list">List</string>
+    <string name="required">Required</string>
+    <string name="key">Key</string>
+    <string name="ref_type_explain">Form_name (if reference type), or Form_name Field_name (if referencedBy type)</string>
+    <string name="data_type">Data type</string>
+    <string name="field_desc">Field Desc.</string>
+    <string name="field_name">Field Name</string>
+    <string name="save_field_def">Save Field Definition</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="enter_new_field_name">Enter new field name</string>
+    <string name="add_field">Add Field</string>
+    <string name="position">position</string>
+    <string name="invalid_entity_name">Invalid entity name:</string>
+    <string name="invalid_form_def">Invalid form definition data: %1$s</string>
+    <string name="fields">fields</string>
+    <string name="all_fields_quotes">All fields must be in quotes</string>
+    <string name="invalid_file_format">Invalid file format</string>
+    <string name="form_def_files_imported">%1$d form definition files imported</string>
+    <string name="form_def_files_exported">%1$d form definition files exported</string>
+    <string name="data_files_imported">%1$d data files imported</string>
+    <string name="data_files_exported">%1$d data files exported</string>
+    <string name="invalid_column">Invalid column</string>
+    <string name="expected">expected</string>
+    <string name="missing_column">Missing column</string>
+    <string name="are_sure_delete_entire_form">ARE YOU SURE YOU WANT TO DELETE THE ENTIRE FORM</string>
+    <string name="are_sure_replace_all_form_defs">ARE YOU SURE YOU WANT TO IMPORT AND REPLACE ALL FORM DEFINITIONS? (WARNING: This will replace all existing form fields)</string>
+    <string name="confirm_all_form_defs">Confirm: Replace all form definitions? (This may affect all data!)</string>
+    <string name="are_sure_delete_form">Are you sure you want to delete an entire form?</string>
+    <string name="delete_form">Delete Form</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="deleted_form">Deleted form</string>
+    <string name="import_forms">Import forms</string>
+    <string name="restore_data_csv">Restore data in .csv files</string>
+    <string name="backup_data_csv">Backup to .csv files</string>
+    <string name="date">date</string>
+    <string name="time">time</string>
+    <string name="search_">search</string>
+    <string name="cap_search">Search</string>
+    <string name="edit">Edit</string>
+    <string name="unable_save_file">Unable to save file</string>
+    <string name="file_already_exists">File already exists</string>
+    <string name="save_copy">Save copy</string>
+    <string name="file">file</string>
+    <string name="unable_display_image">Unable to display image</string>
+    <string name="file_size_too_large">File size too large</string>
+    <string name="deleted">Deleted</string>
+    <string name="unable_read_file">Unable to read file, path: %1$s, error: %2$s</string>
+    <string name="cannot_image_thumbnail">Cannot create image thumbnail, error: %1$s</string>
+    <string name="saved">Saved</string>
+    <string name="cannot_update_display">Cannot update display, error: %1$s</string>
+    <string name="are_sure_delete_item">Are you sure you want to delete this item?</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="new_">New</string>
+    <string name="id">ID</string>
+    <string name="add_form">Add Form</string>
+    <string name="enter_form_name">Enter new form name</string>
+    <string name="select">Select</string>
+    <string name="add_new">Add new: %1$s</string>
+    <string name="search_for">Search for: %1$s</string>
+    <string name="select_form_delete">Select form to delete</string>
+    <string name="expected_metadata_fields_missing">Expected metadata fields missing</string>
+    <string name="file_saved">File saved</string>
+    <string name="parse_exception_message">%1$s on line %2$d of .csv data file for %3$s</string>
+    <string name="expected_num_fields">Expected %1$d fields</string>
+    <string name="empty_directory">Empty Directory</string>
+    <string name="record_already_exists">A record already exists for, key: %1$s</string>
+    <string name="field_is_required">%1$s is required</string>
+    <string name="field_value_invalid_example">%1$s value %2$s is invalid. Example: %3$s</string>
 </resources>

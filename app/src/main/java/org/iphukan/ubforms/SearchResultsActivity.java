@@ -1,4 +1,4 @@
-package com.threedlite.urforms;
+package org.iphukan.ubforms;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.DataDao;
-import com.threedlite.urforms.data.Entity;
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.DataDao;
+import org.iphukan.ubforms.data.Entity;
 
 
 public class SearchResultsActivity extends BaseActivity {
@@ -43,11 +43,12 @@ public class SearchResultsActivity extends BaseActivity {
 
 		Bundle bundle = getIntent().getExtras();
 
-		mEntityName = bundle.getString(EnterDataActivity.ENTITY_NAME);
-		mAttributeName = bundle.getString(EnterDataActivity.ATTRIBUTE_NAME);
+		mEntityName = bundle.getString(EditDataActivity.ENTITY_NAME);
+		mAttributeName = bundle.getString(EditDataActivity.ATTRIBUTE_NAME);
 		mSelectMode = bundle.getString(SELECT_MODE);
 
 		LinearLayout rootView = new LinearLayout(this);
+		rootView.setMinimumWidth(COL_MIN_WIDTH);
 		rootView.setOrientation(LinearLayout.HORIZONTAL);
 
 		populateData(bundle);
@@ -86,7 +87,7 @@ public class SearchResultsActivity extends BaseActivity {
 
 		LinearLayout resultsViewLayout = new LinearLayout(this);
 		resultsViewLayout.setOrientation(LinearLayout.VERTICAL);
-		resultsViewLayout.setMinimumWidth(500);
+		resultsViewLayout.setMinimumWidth(COL_MIN_WIDTH);
 		parent.addView(resultsViewLayout);
 
 
@@ -114,12 +115,15 @@ public class SearchResultsActivity extends BaseActivity {
 		return attribute.isListable() && 
 				(
 						attribute.getDataType().equals(Attribute.STRING_TYPE) 
-						|| attribute.getDataType().equals(Attribute.DATE_TYPE) 
-						);
+						|| attribute.getDataType().equals(Attribute.DATE_TYPE)
+						|| attribute.getDataType().equals(Attribute.CHOICES_TYPE)
+                        || attribute.getDataType().equals(Attribute.REF_BY_TYPE)
+						|| attribute.getDataType().equals(Attribute.REF_TYPE)
+				);
 	}
 
 	private String getSelectText() {
-		return (mSelectMode == null) ? "Edit" : "Select";
+		return (mSelectMode == null) ? getString(R.string.edit) : getString(R.string.select);
 	}
 
 	private Attribute mSortOn;
@@ -184,7 +188,8 @@ public class SearchResultsActivity extends BaseActivity {
 		TableRow tr = new TableRow(this);
 		tableLayout.addView(tr);
 		Button bv = new Button(this);
-		bv.setText("Refresh");
+		bv.setText(R.string.refresh);
+		bv.setTextSize(TEXT_SIZE_LARGE);
 		bv.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				doSearch();
@@ -198,6 +203,7 @@ public class SearchResultsActivity extends BaseActivity {
 				final Attribute sort = attribute;
 				bv = new Button(this);
 				bv.setText(attribute.getAttributeDesc());
+				bv.setTextSize(TEXT_SIZE_LARGE);
 				bv.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						if (mSortOn == null) {
@@ -217,13 +223,14 @@ public class SearchResultsActivity extends BaseActivity {
 		for (Entity aentity: entities) {
 			tr = new TableRow(this);
 			bv = new Button(this);
-			bv.setText(getSelectText() + " >");
+			bv.setText(getString(R.string.entity_arrow,getSelectText()));
+			bv.setTextSize(TEXT_SIZE_LARGE);
 			final Entity fentity = aentity;
 			View.OnClickListener ocl;
 			if (this.mSelectMode == null) {
 				ocl = new View.OnClickListener() {
 					public void onClick(View v) {
-						startEdit(fentity);
+						startEditExisting(fentity);
 					}
 				};
 			} else {
@@ -242,7 +249,8 @@ public class SearchResultsActivity extends BaseActivity {
 					String value = aentity.getValues().get(attribute.getAttributeName());
 					TextView tv = new TextView(this);
 					tv.setText(value);
-					tv.setPadding(5, 5, 5, 5);
+					tv.setTextSize(TEXT_SIZE_LARGE);
+					tv.setPadding(2, 2, 2, 2);
 					tr.addView(tv);
 				}
 			}
@@ -254,12 +262,37 @@ public class SearchResultsActivity extends BaseActivity {
 	}
 
 	private boolean isAlphaSort(Attribute attribute) {
-		String v = attribute.getValidationRegex();
+		/*String v = attribute.getValidationExample();
 		if (v == null || v.trim().length() == 0) return true;
 		for (int i = 0; i < v.length(); i++) {
 			char c = v.charAt(i);
 			if (Character.isLetter(c)) return true;
 		}
+		String v2 = attribute.getValidationRegex();
+		if(v2.contains("\\d") && (!v2.contains("\\w")))
+		{
+			for (int i = 0; i < 26; i++) {
+				char c = v2.charAt(i);
+				if (Character.isLetter(c))
+				{
+					if("d".contains(c+"") && i>0)
+					{
+						char c2 = v2.charAt(i-1);
+						if("\\".contains(c+""))
+						{
+							//still ok
+						}
+						else{
+							return true;
+						}
+					}
+					else
+					{
+						return true;
+					}
+				}
+			}
+		}*/
 		return false;
 	}
 	
@@ -277,8 +310,8 @@ public class SearchResultsActivity extends BaseActivity {
 	public void finish() {
 		Intent intent = new Intent();
 		Bundle bundle = getEntitySelectedBundle(mSelectedEntity);
-		bundle.putString(EnterDataActivity.ENTITY_NAME, mEntityName); // this entity type
-		bundle.putString(EnterDataActivity.ATTRIBUTE_NAME, mAttributeName); //  fk attribute on caller, not this entity
+		bundle.putString(EditDataActivity.ENTITY_NAME, mEntityName); // this entity type
+		bundle.putString(EditDataActivity.ATTRIBUTE_NAME, mAttributeName); //  fk attribute on caller, not this entity
 		intent.putExtras(bundle);
 		setResult(RESULT_OK, intent);
 		super.finish();

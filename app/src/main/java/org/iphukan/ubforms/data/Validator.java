@@ -1,4 +1,7 @@
-package com.threedlite.urforms.data;
+package org.iphukan.ubforms.data;
+
+
+import org.iphukan.ubforms.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +69,37 @@ public class Validator {
 
 		return null;
 	}
+
+    public String validate_dontcare_unique(List<Attribute> attributes, Map<String, String> values) {
+
+        List<Attribute> keys = new ArrayList<Attribute>();
+        for (Attribute attribute: attributes) {
+
+            String value = values.get(attribute.getAttributeName());
+            if (value == null || value.trim().length() == 0) value = null;
+
+            if (attribute.isRequired() && value == null){
+                return String.format("%s is required",attribute.getAttributeName());
+            }
+
+            String regex = attribute.getValidationRegex();
+            if (regex == null || regex.trim().length() == 0) regex = null;
+
+            if (value != null && regex != null) {
+                boolean matches = Pattern.matches(regex, value);
+                if (!matches) {
+                    return String.format("%s value %s is invalid. Example: %s",attribute.getAttributeName(),value,attribute.getValidationExample());
+                }
+            }
+
+            if (attribute.isPrimaryKeyPart()) {
+                keys.add(attribute);
+            }
+
+        }
+
+        return null;
+    }
 
 	
 }

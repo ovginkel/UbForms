@@ -1,4 +1,4 @@
-package com.threedlite.urforms;
+package org.iphukan.ubforms;
 
 import java.util.List;
 import java.util.Map;
@@ -14,16 +14,16 @@ import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.AttributeDao;
-import com.threedlite.urforms.data.DataDao;
-import com.threedlite.urforms.data.Entity;
-import com.threedlite.urforms.data.EntityDao;
-import com.threedlite.urforms.data.UrSqlHelper;
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.AttributeDao;
+import org.iphukan.ubforms.data.DataDao;
+import org.iphukan.ubforms.data.Entity;
+import org.iphukan.ubforms.data.EntityDao;
+import org.iphukan.ubforms.data.UrSqlHelper;
 
 public class BaseActivity extends Activity {
 	
-	public final static String TAG = "urforms";
+	public final static String TAG = "ubforms";
 	
 	public static String ENTITY_NAME = "_entityName";
 	public static String ATTRIBUTE_NAME = "_attributeName";
@@ -135,6 +135,14 @@ public class BaseActivity extends Activity {
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}
+
+    protected void startEditExisting(Entity entity) {
+        Intent intent = new Intent(this, EditDataActivity.class);
+        Bundle bundle = getEntitySelectedBundle(entity);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 	
 	
 

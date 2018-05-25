@@ -1,17 +1,17 @@
-package com.threedlite.urforms;
+package org.iphukan.ubforms;
 
-import java.util.List;
-
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.Entity;
-
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.Entity;
+
+import java.util.List;
 
 public class SearchViewActivity extends BaseActivity {
 	LinearLayout searchViewLayoutContents;
@@ -21,6 +21,7 @@ public class SearchViewActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		searchViewLayoutContents = new LinearLayout(this);
 		searchViewLayoutContents.setOrientation(LinearLayout.VERTICAL);
+		searchViewLayoutContents.setMinimumWidth(COL_MIN_WIDTH);
 
 		setContentView(searchViewLayoutContents);
 		Bundle bundle = getIntent().getExtras();
@@ -30,7 +31,8 @@ public class SearchViewActivity extends BaseActivity {
 		newEntity.setAttributes(getAttributes(newEntity));
 
 		Button btnAddNew = new Button(this);
-		btnAddNew.setText("Add new " + newEntity.getName());
+		btnAddNew.setText(getString(R.string.add_new,newEntity.getName()));
+		btnAddNew.setTextSize(TEXT_SIZE_LARGE);
 		View.OnClickListener ocl = new View.OnClickListener() {
 			public void onClick(View v) {
 				startEdit(newEntity);
@@ -40,7 +42,8 @@ public class SearchViewActivity extends BaseActivity {
 		searchViewLayoutContents.addView(btnAddNew);
 
 		Button btnSearch = new Button(this);
-		btnSearch.setText("Search for " + newEntity.getName());
+		btnSearch.setText(getString(R.string.search_for,newEntity.getName()));
+		btnSearch.setTextSize(TEXT_SIZE_LARGE);
 		btnSearch.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				doSearch(newEntity);
@@ -54,6 +57,7 @@ public class SearchViewActivity extends BaseActivity {
 
 				TextView tvDesc = new TextView(this);
 				tvDesc.setText(attribute.getAttributeDesc());
+				tvDesc.setTextSize(TEXT_SIZE_LARGE);
 				searchViewLayoutContents.addView(tvDesc);
 				EditText etValue = new EditText(this);
 				etValue.setTag("S_" + attribute.getAttributeName());
@@ -72,11 +76,12 @@ public class SearchViewActivity extends BaseActivity {
 		for (Attribute attribute : getAttributes(entity)) {
 			if (isSearchable(attribute)) {
 				String tag = "S_" + attribute.getAttributeName();
-				EditText ev = (EditText) searchViewLayoutContents.findViewWithTag(tag);
+				EditText ev = searchViewLayoutContents.findViewWithTag(tag);
+				ev.setTextSize(TEXT_SIZE_LARGE);
 				bundle.putString(attribute.getAttributeName(), ev.getText().toString());
 			}
 		}
-		bundle.putString(EnterDataActivity.ENTITY_NAME, entity.getName());
+		bundle.putString(EditDataActivity.ENTITY_NAME, entity.getName());
 
 		intent.putExtras(bundle);
 		startActivity(intent);
@@ -88,7 +93,10 @@ public class SearchViewActivity extends BaseActivity {
 				&& (
 						attribute.getDataType().equals(Attribute.STRING_TYPE) 
 						|| attribute.getDataType().equals(Attribute.DATE_TYPE)
-					);
+						|| attribute.getDataType().equals(Attribute.CHOICES_TYPE)
+                        || attribute.getDataType().equals(Attribute.REF_BY_TYPE)
+						|| attribute.getDataType().equals(Attribute.REF_TYPE)
+		);
 	}
 
 }

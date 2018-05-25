@@ -16,11 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class AttributeDetailsActivity extends BaseActivity {
-	
-	private Entity currentEntity = null;
+
 	private Attribute currentAttribute = null;
-	private int currentPosition;
-	
+
 	private EditText etFieldName = null;
 	private EditText etFieldDescription = null; 
 	private Spinner spDatatype  = null;
@@ -121,10 +119,10 @@ public class AttributeDetailsActivity extends BaseActivity {
 		
 		Bundle bundle = getIntent().getExtras();
 
-		currentEntity = new Entity();
+		Entity currentEntity = new Entity();
 		currentEntity.setName(bundle.getString(ENTITY_NAME));
 		currentEntity.setAttributes(getAttributes(currentEntity));
-		currentPosition = bundle.getInt("position");
+		int currentPosition = bundle.getInt("position");
 		currentAttribute = getAttributes(currentEntity).get(currentPosition);
 		readFieldDetails(currentAttribute);
 	}

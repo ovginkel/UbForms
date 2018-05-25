@@ -362,5 +362,66 @@ public class DataDao {
 		return results;
 	}
 
+	public List<Map<String, String>> searchNoLimits(Entity entity, Map<String, String> searchValues) {
+		String sql = "";
+
+		int i = 0;
+
+		List<String> args = new ArrayList<String>();
+		for (Attribute attribute: entity.getAttributes()) {
+
+			String searchValue = searchValues.get(attribute.getAttributeName());
+
+
+			if (i == 0) {
+				sql += "select * from  ";
+			} else {
+				sql += ((searchValue == null) ? " left ":"") + " join ";
+			}
+			sql += " ("
+					+"select entity_id \"i"+i+"\", field_value \"f"+i+"\" "
+					+"from entity_data "
+					+"where "
+					+"entity_name = ? "
+					+"and attribute_name = ? " + ((searchValue == null) ? "" : " and field_value like ? collate nocase ")
+					+")  \"t"+i+"\" "
+			;
+			args.add(attribute.getEntityName());
+			args.add(attribute.getAttributeName());
+			if (searchValue != null) {
+				args.add("%"+searchValue+"%");
+			}
+			if (i > 0) {
+				sql += " on t0.i0 = t"+i+".i"+i + " ";
+			}
+			i++;
+		}
+		sql += " order by i0  limit 30000 ";
+
+		//Log.d(TAG, sql);
+		String debug = ""; for (String s:args) debug += s + " ";
+		Log.d(TAG, debug);
+
+		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
+		Cursor cursor = database.rawQuery(sql, (String[])args.toArray(new String[args.size()]));
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Map<String, String> row = new HashMap<String, String>();
+			i = 0;
+			for (Attribute attribute: entity.getAttributes()) {
+				int id = cursor.getInt(i*2);
+				String value = cursor.getString(i*2+1);
+				if (i == 0) row.put("_id", ""+id);
+				row.put(attribute.getAttributeName(), value);
+				i++;
+			}
+			results.add(row);
+			cursor.moveToNext();
+		}
+
+		//Log.d(TAG, "results="+results.size());
+
+		return results;
+	}
 	
 }

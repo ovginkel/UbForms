@@ -1,7 +1,4 @@
-package com.threedlite.urforms;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.iphukan.ubforms;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,9 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.threedlite.urforms.data.Attribute;
-import com.threedlite.urforms.data.Entity;
-import com.threedlite.urforms.data.EntityDao;
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.Entity;
+import org.iphukan.ubforms.data.EntityDao;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchDataActivity extends BaseActivity {
@@ -58,6 +58,7 @@ public class SearchDataActivity extends BaseActivity {
 
 		LinearLayout entityLayout = new LinearLayout(this);
 		entityLayout.setOrientation(LinearLayout.VERTICAL);
+		entityLayout.setMinimumWidth(COL_MIN_WIDTH);
 		parent.addView(entityLayout);
 
 		ListView entitylist = new ListView(this);
@@ -83,7 +84,10 @@ public class SearchDataActivity extends BaseActivity {
 				(
 				attribute.getDataType().equals(Attribute.STRING_TYPE) 
 				|| attribute.getDataType().equals(Attribute.DATE_TYPE)
-				);
+                || attribute.getDataType().equals(Attribute.CHOICES_TYPE)
+				|| attribute.getDataType().equals(Attribute.REF_BY_TYPE)
+				|| attribute.getDataType().equals(Attribute.REF_TYPE)
+                );
 	}
 
 	private void launchSeachView(Entity entity) {

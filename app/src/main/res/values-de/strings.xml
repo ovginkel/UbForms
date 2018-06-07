@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">UbFormen Databank</string>
+    <string name="title_activity_search_data">UbFormen - Daten suchen</string>
+    <string name="title_activity_search_results">UbFormen - Suchergebnisse</string>
+    <string name="title_activity_manage_forms">UbFormen - Formulare verwalten</string>
+    <string name="title_activity_enter_data">UbFormen - Daten eingeben</string>
+    <string name="title_activity_backup_restore">UbFormen - Sichern / Wiederherstellen</string>
+
+
+    <string name="menu_manage_forms">Formulare verwalten</string>
+    <string name="menu_search_enter_data">Suchen / Daten eingeben</string>
+    <string name="menu_backup_restore">Backup / Wiederherstellen</string>
+
+    <!-- aFileChooser -->
+    <string name="select_file">Datei wählen</string>
+    <string name="title_activity_search_view">UbFormen - Suchen / Daten eingeben</string>
+    <string name="title_activity_edit_data">UbFormen - Daten bearbeiten</string>
+    <string name="title_activity_attributes_list">UbFormen - Liste der Attribute</string>
+    <string name="title_activity_attribute_details">UbFormen - Attributdetails</string>
+
+    <!-- UI strings -->
+    <string name="entity_arrow">%1$s ></string>
+    <string name="refresh">Erfrischen</string>
+    <string name="val_example">Validierungsbeispiel</string>
+    <string name="val_regex">ValidierungsregEx</string>
+    <string name="choices">Möglichkeiten</string>
+    <string name="short_desc">Kurze Besc.</string>
+    <string name="list">Liste</string>
+    <string name="required">Erforderlich</string>
+    <string name="key">Schlüssel</string>
+    <string name="ref_type_explain">Formularname (wenn Referenztyp) Formularname Feldname (wenn referenziert von Typ)</string>
+    <string name="data_type">Datentyp</string>
+    <string name="field_desc">Feld Beschr.</string>
+    <string name="field_name">Feldname</string>
+    <string name="save_field_def">Felddefinition speichern</string>
+    <string name="cancel">Absagen</string>
+    <string name="ok">OK</string>
+    <string name="enter_new_field_name">Geben Sie einen neuen Feldnamen ein</string>
+    <string name="add_field">Attribute hinzufügen</string>
+    <string name="position">Position</string>
+    <string name="invalid_entity_name">Ungültiger Entitätsname:</string>
+    <string name="invalid_form_def">Ungültige Formulardefinitionsdaten: %1$s</string>
+    <string name="fields">Felder</string>
+    <string name="all_fields_quotes">Alle Felder müssen in Anführungszeichen stehen</string>
+    <string name="invalid_file_format">Ungültiges Dateiformat</string>
+    <string name="form_def_files_imported">%1$d Formulardefinitionsdateien importiert</string>
+    <string name="form_def_files_exported">%1$d Formulardefinitionsdateien exportiert</string>
+    <string name="data_files_imported">%1$s Datendateien importiert</string>
+    <string name="data_files_exported">%1$d Datendateien exportiert</string>
+    <string name="invalid_column">Ungültige Spalte</string>
+    <string name="expected">erwartet</string>
+    <string name="missing_column">Fehlende Spalte</string>
+    <string name="are_sure_delete_entire_form">Möchten Sie das gesamte Formular wirklich löschen?</string>
+    <string name="are_sure_replace_all_form_defs">Möchten Sie wirklich alle Formulardefinitionen ersetzen? (Warnung: Dies wird alle vorhandenen Formularfelder ersetzen)</string>
+    <string name="confirm_all_form_defs">Bestätigen: alle Formulardefinitionen ersetzen? (Dies kann sich auf alle Daten auswirken!)</string>
+    <string name="are_sure_delete_form">Möchten Sie das gesamte Formular wirklich löschen?</string>
+    <string name="delete_form">Formular löschen</string>
+    <string name="no">Nein</string>
+    <string name="yes">Ja</string>
+    <string name="deleted_form">Gelöschtes Formular</string>
+    <string name="import_forms">Formulare importieren</string>
+    <string name="restore_data_csv">Stellen Sie Daten in CSV-Dateien wieder her</string>
+    <string name="backup_data_csv">Backup in .csv-Dateien</string>
+    <string name="date">Datum</string>
+    <string name="time">Zeit</string>
+    <string name="search_">Suche</string>
+    <string name="cap_search">Suche</string>
+    <string name="edit">Edieren</string>
+    <string name="unable_save_file">Datei kann nicht gespeichert werden</string>
+    <string name="file_already_exists">Die Datei existiert bereits</string>
+    <string name="save_copy">Kopie speichern</string>
+    <string name="file">Dateien</string>
+    <string name="unable_display_image">Das Bild kann nicht angezeigt werden</string>
+    <string name="file_size_too_large">Dateigröße zu groß</string>
+    <string name="deleted">Gelöscht</string>
+    <string name="unable_read_file">Datei konnte nicht gelesen werden, Pfad: %1$s, Fehler: %2$s</string>
+    <string name="cannot_image_thumbnail">Image-Miniaturansicht kann nicht erstellt werden, Fehler: %1$s</string>
+    <string name="saved">Gerettet</string>
+    <string name="cannot_update_display">Anzeige kann nicht aktualisiert werden, Fehler: %1$s</string>
+    <string name="are_sure_delete_item">Sind Sie sicher, dass Sie diesen Artikel löschen möchten?</string>
+    <string name="delete">Löschen</string>
+    <string name="save">Speichern</string>
+    <string name="new_">Neu</string>
+    <string name="id">ID</string>
+    <string name="add_form">Tabelle hinzufügen</string>
+    <string name="enter_form_name">Geben Sie einene neuen Formularnamen ein</string>
+    <string name="select">Wählen</string>
+    <string name="add_new">Neues %1$s hinzufügen</string>
+    <string name="search_for">Suche nach: %1$s</string>
+    <string name="select_form_delete">Wählen Sie das zu löschende Formular aus</string>
+    <string name="expected_metadata_fields_missing">Erwartete Metadaten-Dateien fehlen</string>
+    <string name="file_saved">Datei gespeichert</string>
+    <string name="parse_exception_message">%1$s in Zeile %2$d der CSV-Datei für %3$s</string>
+    <string name="expected_num_fields">Erwartete %1$d Felder</string>
+    <string name="empty_directory">Leeres Verzeichnis</string>
+    <string name="record_already_exists">Ein Datensatz existiert bereits für, Schlüssel: %1$s</string>
+    <string name="field_is_required">%1$s ist erforderlich</string>
+    <string name="field_value_invalid_example">%1$s-Feldwert %2$s ist ungültig. Beispiel %3$s</string>
+</resources>

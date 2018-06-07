@@ -124,7 +124,7 @@ public class AttributeDetailsActivity extends BaseActivity {
 		Entity currentEntity = new Entity();
 		currentEntity.setName(bundle.getString(ENTITY_NAME));
 		currentEntity.setAttributes(getAttributes(currentEntity));
-		int currentPosition = bundle.getInt("position");
+		int currentPosition = bundle.getInt("position"); //NB: Do not translate
 		currentAttribute = getAttributes(currentEntity).get(currentPosition);
 		readFieldDetails(currentAttribute);
 	}

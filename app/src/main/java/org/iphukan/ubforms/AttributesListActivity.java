@@ -70,7 +70,7 @@ public class AttributesListActivity extends BaseActivity {
 	private void launchAttributeDetails(int position) {
 		Intent intent = new Intent(this, AttributeDetailsActivity.class);
 		intent.putExtra(ENTITY_NAME, currentEntity.getName());
-		intent.putExtra(getString(R.string.position), position);
+		intent.putExtra("position", position); //NB: Do not translate
 		startActivity(intent);
 	}
 	

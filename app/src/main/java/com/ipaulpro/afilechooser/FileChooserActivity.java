@@ -51,7 +51,7 @@ public class FileChooserActivity extends ListActivity {
 	
 	private static final String PATH = "path";
 	private static final String BREADCRUMB = "breadcrumb";
-	private static final String POSTIION = "position";
+	private static final String POSITION = "position";
 	private static final String HIDDEN_PREFIX = ".";
 
 	private String mPath; // The current file path
@@ -408,7 +408,7 @@ public class FileChooserActivity extends ListActivity {
       	// Save the current path and breadcrumb when the activity is interrupted.
       	outState.putString(PATH, mPath);
       	outState.putStringArrayList(BREADCRUMB, mBreadcrumb);
-      	outState.putInt(POSTIION, getListView().getFirstVisiblePosition());
+      	outState.putInt(POSITION, getListView().getFirstVisiblePosition());
     }
 
 	/**
@@ -421,6 +421,6 @@ public class FileChooserActivity extends ListActivity {
 				state.getString(PATH) : mExternalDir.getAbsolutePath();
 		// Restore the previous breadcrumb
 		this.mBreadcrumb = state.getStringArrayList(BREADCRUMB);
-		fillList(state.getInt(POSTIION));
+		fillList(state.getInt(POSITION));
 	}
 }

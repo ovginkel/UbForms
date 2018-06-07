@@ -271,31 +271,39 @@ public class DataDao {
 			}
 			i++;
 		}
-		sql += " order by i0  limit 400 ";
-
-		//Log.d(TAG, sql);
-		String debug = ""; for (String s:args) debug += s + " ";
-		Log.d(TAG, debug);
-
 		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
-		Cursor cursor = database.rawQuery(sql, (String[])args.toArray(new String[args.size()]));
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			Map<String, String> row = new HashMap<String, String>();
-			i = 0;
-			for (Attribute attribute: entity.getAttributes()) {
-				int id = cursor.getInt(i*2);
-				String value = cursor.getString(i*2+1);
-				if (i == 0) row.put("_id", ""+id);
-				row.put(attribute.getAttributeName(), value);
-				i++;
-			}
-			results.add(row);
-			cursor.moveToNext();
-		}
-		
-		//Log.d(TAG, "results="+results.size());
-		
+        boolean returnim = false;
+        if(sql.equals("")) //Check for failure
+        {
+            returnim=true;
+        }
+        if(!returnim) {
+            sql += " order by i0  limit 400 ";
+
+            //Log.d(TAG, sql);
+            String debug = "";
+            for (String s : args) debug += s + " ";
+            Log.d(TAG, debug);
+
+
+            Cursor cursor = database.rawQuery(sql, (String[]) args.toArray(new String[args.size()]));
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Map<String, String> row = new HashMap<String, String>();
+                i = 0;
+                for (Attribute attribute : entity.getAttributes()) {
+                    int id = cursor.getInt(i * 2);
+                    String value = cursor.getString(i * 2 + 1);
+                    if (i == 0) row.put("_id", "" + id);
+                    row.put(attribute.getAttributeName(), value);
+                    i++;
+                }
+                results.add(row);
+                cursor.moveToNext();
+            }
+
+            //Log.d(TAG, "results="+results.size());
+        }
 		return results;
 	}
 
@@ -334,31 +342,39 @@ public class DataDao {
 			}
 			i++;
 		}
-		sql += " order by i0  limit 400 ";
-
-		//Log.d(TAG, sql);
-		String debug = ""; for (String s:args) debug += s + " ";
-		Log.d(TAG, debug);
-
 		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
-		Cursor cursor = database.rawQuery(sql, (String[])args.toArray(new String[args.size()]));
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			Map<String, String> row = new HashMap<String, String>();
-			i = 0;
-			for (Attribute attribute: entity.getAttributes()) {
-				int id = cursor.getInt(i*2);
-				String value = cursor.getString(i*2+1);
-				if (i == 0) row.put("_id", ""+id);
-				row.put(attribute.getAttributeName(), value);
-				i++;
-			}
-			results.add(row);
-			cursor.moveToNext();
+        boolean returnim = false;
+		if(sql.equals("")) //Check for failure
+		{
+			returnim=true;
 		}
+		if(!returnim) {
+            sql += " order by i0  limit 400 ";
 
-		//Log.d(TAG, "results="+results.size());
+            //Log.d(TAG, sql);
+            String debug = "";
+            for (String s : args) debug += s + " ";
+            Log.d(TAG, debug);
 
+
+            Cursor cursor = database.rawQuery(sql, (String[]) args.toArray(new String[args.size()]));
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Map<String, String> row = new HashMap<String, String>();
+                i = 0;
+                for (Attribute attribute : entity.getAttributes()) {
+                    int id = cursor.getInt(i * 2);
+                    String value = cursor.getString(i * 2 + 1);
+                    if (i == 0) row.put("_id", "" + id);
+                    row.put(attribute.getAttributeName(), value);
+                    i++;
+                }
+                results.add(row);
+                cursor.moveToNext();
+            }
+
+            //Log.d(TAG, "results="+results.size());
+        }
 		return results;
 	}
 
@@ -396,31 +412,38 @@ public class DataDao {
 			}
 			i++;
 		}
-		sql += " order by i0  limit 30000 ";
-
-		//Log.d(TAG, sql);
-		String debug = ""; for (String s:args) debug += s + " ";
-		Log.d(TAG, debug);
-
 		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
-		Cursor cursor = database.rawQuery(sql, (String[])args.toArray(new String[args.size()]));
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			Map<String, String> row = new HashMap<String, String>();
-			i = 0;
-			for (Attribute attribute: entity.getAttributes()) {
-				int id = cursor.getInt(i*2);
-				String value = cursor.getString(i*2+1);
-				if (i == 0) row.put("_id", ""+id);
-				row.put(attribute.getAttributeName(), value);
-				i++;
-			}
-			results.add(row);
-			cursor.moveToNext();
-		}
+        boolean returnim = false;
+        if(sql.equals("")) //Check for failure
+        {
+            returnim=true;
+        }
+        if(!returnim) {
+            sql += " order by i0  limit 30000 ";
 
-		//Log.d(TAG, "results="+results.size());
+            //Log.d(TAG, sql);
+            String debug = "";
+            for (String s : args) debug += s + " ";
+            Log.d(TAG, debug);
 
+            Cursor cursor = database.rawQuery(sql, (String[]) args.toArray(new String[args.size()]));
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Map<String, String> row = new HashMap<String, String>();
+                i = 0;
+                for (Attribute attribute : entity.getAttributes()) {
+                    int id = cursor.getInt(i * 2);
+                    String value = cursor.getString(i * 2 + 1);
+                    if (i == 0) row.put("_id", "" + id);
+                    row.put(attribute.getAttributeName(), value);
+                    i++;
+                }
+                results.add(row);
+                cursor.moveToNext();
+            }
+
+            //Log.d(TAG, "results="+results.size());
+        }
 		return results;
 	}
 	

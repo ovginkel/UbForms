@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           
     package="org.iphukan.ubforms"
-    android:versionCode="16"
-    android:versionName="1.16">
+    android:versionCode="17"
+    android:versionName="1.17">
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" android:maxSdkVersion="27" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

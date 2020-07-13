@@ -1,19 +1,7 @@
 package org.iphukan.ubforms;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.iphukan.ubforms.common.DialogUtils;
+import org.iphukan.ubforms.common.IDialogClickListener;
+import org.iphukan.ubforms.common.IGrantPermissionCallback;
 import org.iphukan.ubforms.data.Attribute;
 import org.iphukan.ubforms.data.AttributeDao;
 import org.iphukan.ubforms.data.BlobData;
@@ -37,11 +34,27 @@ import org.iphukan.ubforms.data.DataDao;
 import org.iphukan.ubforms.data.Entity;
 import org.iphukan.ubforms.data.EntityDao;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class BackupRestoreActivity extends BaseActivity {
 
 
 	private String storagePath;
+    public File blobDir = null;
+
 
 
 	@Override
@@ -157,6 +170,27 @@ public class BackupRestoreActivity extends BaseActivity {
 
 	}
 
+	private void checkStoragePermission(Activity activity, final IGrantPermissionCallback callback) {
+		Dexter.withActivity(activity)
+				.withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+				.withListener(new MultiplePermissionsListener() {
+					@Override
+					public void onPermissionsChecked(MultiplePermissionsReport report) {
+						if (callback == null) return;
+						if (report.isAnyPermissionPermanentlyDenied()) {
+							callback.denied();
+						} else {
+							callback.granted();
+						}
+					}
+
+					@Override
+					public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+						token.continuePermissionRequest();
+					}
+				}).check();
+	}
+
 	private void doDeleteEntity() {
 
 		final Context context = this;
@@ -225,9 +259,10 @@ public class BackupRestoreActivity extends BaseActivity {
 	}
 
 	private File getBlobExportDir() {
-		File blobdir = new File(storagePath + "/blob_data");
-		blobdir.mkdirs();
-		return blobdir;
+
+        File blobDir = new File(storagePath + "/blob_data");
+        blobDir.mkdirs();
+        return blobDir;
 	}
 
 	private String getBlobMetadataFileName() {
@@ -316,115 +351,148 @@ public class BackupRestoreActivity extends BaseActivity {
 
 	private void doBlobExport() throws IOException {
 
-		File blobdir = getBlobExportDir();
+        File blobDir = getBlobExportDir();
 
-		// Delete any existing exported blob data first
-		File[] files = blobdir.listFiles();
-		for (File file: files) file.delete();
+        // Delete any existing exported blob data first
+        File[] files = blobDir.listFiles();
+        for (File file: files) file.delete();
 
-		File metadata = new File(blobdir, getBlobMetadataFileName());
-		if (metadata.exists()) metadata.delete();
-		Writer out = new BufferedWriter(new FileWriter(metadata));
+        File metadata = new File(blobDir, getBlobMetadataFileName());
+        if (metadata.exists()) metadata.delete();
+        Writer out = null;
+        try{
+            out = new BufferedWriter(new FileWriter(metadata));
+        }catch (java.io.IOException ex){}
 
-		// header
-		String header = "\"giud\",\"fileName\",\"mimeType\",\"size\"\n";
-		out.write(header);
 
-		
-		SQLiteDatabase database = sqlHelper.getWritableDatabase();
-		BlobDataDao blobDataDao = new BlobDataDao(database);
-		try {
+        // header
+        String header = "\"giud\",\"fileName\",\"mimeType\",\"size\"\n";
+        try{
+            out.write(header);
+        }catch (java.io.IOException ex){}
 
-			Cursor cursor = database.query(BlobDataDao.TABLE_NAME, BlobDataDao.ALL_FIELDS, null, null, null, null, null);
 
-			cursor.moveToFirst();
-			while (!cursor.isAfterLast()) {
+        SQLiteDatabase database = sqlHelper.getWritableDatabase();
+        BlobDataDao blobDataDao = new BlobDataDao(database);
+        try {
 
-				BlobData data = blobDataDao.mapObject(cursor);
+            Cursor cursor = database.query(BlobDataDao.TABLE_NAME, BlobDataDao.ALL_FIELDS, null, null, null, null, null);
 
-				String line = "\""+ data.getGuid() 
-						+"\",\""+ csvEscape(data.getFileName()) 
-						+"\",\""+ csvEscape(data.getMimeType()) 
-						+"\",\""+ data.getSize()+"\"\n";
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
 
-				out.write(line);
+                BlobData data = blobDataDao.mapObject(cursor);
 
-				File datfile = new File(blobdir, data.getGuid() + ".dat");
-				if (datfile.exists()) datfile.delete();
-				FileOutputStream datout = new FileOutputStream(datfile);
-				datout.write(data.getBlobData());
-				datout.close();
+                String line = "\""+ data.getGuid()
+                        +"\",\""+ csvEscape(data.getFileName())
+                        +"\",\""+ csvEscape(data.getMimeType())
+                        +"\",\""+ data.getSize()+"\"\n";
 
-				cursor.moveToNext();
-			}
+                try{
+                    out.write(line);
+                }catch (java.io.IOException ex){}
 
-			cursor.close();
-			
-		} finally {
-			sqlHelper.close();
-			out.flush();
-			out.close();
-		}
+
+                File datfile = new File(blobDir, data.getGuid() + ".dat");
+                if (datfile.exists()) datfile.delete();
+                try{
+                    FileOutputStream datout = new FileOutputStream(datfile);
+                    datout.write(data.getBlobData());
+                    datout.close();
+                }catch (java.io.IOException ex){}
+
+
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+
+        } finally {
+            sqlHelper.close();
+            try{
+                out.flush();
+                out.close();
+            }catch (java.io.IOException ex){}
+        }
+
 	}
 
 	private void doExport() {
 
-		try {
+        final Activity activity = this;
+        checkStoragePermission(activity, new IGrantPermissionCallback() {
+            @Override
+            public void granted() {
+                DialogUtils.displayChooseOkNoDialog(activity, R.string.allow_storage,
+                        R.string.permission_granted, new IDialogClickListener() {
+                            @Override
+                            public void onOK() {
+                                try {
 
-			List<Entity> entities = getEntities();
-			for (Entity entity: entities) {
+                                    List<Entity> entities = getEntities();
+                                    for (Entity entity: entities) {
 
-				List<Attribute> attributes = getAttributes(entity);
-				entity.setAttributes(attributes);
-				File file = getEntityFile(entity);
-				if (file.exists()) file.delete();
-				Writer out = new BufferedWriter(new FileWriter(file));
-				try {
+                                        List<Attribute> attributes = getAttributes(entity);
+                                        entity.setAttributes(attributes);
+                                        File file = getEntityFile(entity);
+                                        if (file.exists()) file.delete();
+                                        Writer out = new BufferedWriter(new FileWriter(file));
+                                        try {
 
-					//header record
-					out.write("\"_id\"");
-					for (Attribute attribute: attributes) {
-						out.write(",");
-						out.write("\""+csvEscape(attribute.getAttributeName())+"\"");
-					}
-					out.write("\r\n");
+                                            //header record
+                                            out.write("\"_id\"");
+                                            for (Attribute attribute: attributes) {
+                                                out.write(",");
+                                                out.write("\""+csvEscape(attribute.getAttributeName())+"\"");
+                                            }
+                                            out.write("\r\n");
 
-					SQLiteDatabase database = sqlHelper.getWritableDatabase();
-					DataDao dataDao = new DataDao(database);
-					try {
-						List<Map<String, String>> results = dataDao.searchNoLimits(entity, new HashMap<String, String>());
-						for (Map<String, String> row: results) {
-							out.write("\""+row.get("_id")+"\"");
-							for (Attribute attribute: attributes) {
-								String name = attribute.getAttributeName();
-								String value = row.get(name);
-								if (value == null) value = "";
-								value = csvEscape(value);
-								String field = ",\"" + value + "\"";
-								out.write(field);
-							}
-							out.write("\r\n");
-						}
+                                            SQLiteDatabase database = sqlHelper.getWritableDatabase();
+                                            DataDao dataDao = new DataDao(database);
+                                            try {
+                                                List<Map<String, String>> results = dataDao.searchNoLimits(entity, new HashMap<String, String>());
+                                                for (Map<String, String> row: results) {
+                                                    out.write("\""+row.get("_id")+"\"");
+                                                    for (Attribute attribute: attributes) {
+                                                        String name = attribute.getAttributeName();
+                                                        String value = row.get(name);
+                                                        if (value == null) value = "";
+                                                        value = csvEscape(value);
+                                                        String field = ",\"" + value + "\"";
+                                                        out.write(field);
+                                                    }
+                                                    out.write("\r\n");
+                                                }
 
-					} finally {
-						sqlHelper.close();
-					}
+                                            } finally {
+                                                sqlHelper.close();
+                                            }
 
-				} finally {
-					out.flush();
-					out.close();
-				}
-			}
+                                        } finally {
+                                            out.flush();
+                                            out.close();
+                                        }
+                                    }
 
-			doBlobExport();
+                                    doBlobExport();
 
-			makeToast(getString(R.string.data_files_exported,entities.size()));
+                                    makeToast(getString(R.string.data_files_exported,entities.size()));
 
-			doExportForms();
+                                    doExportForms();
 
-		} catch (Exception e) {
-			makeToast(e.getMessage());
-		}
+                                } catch (Exception e) {
+                                    makeToast(e.getMessage());
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void denied() {
+
+            }
+        });
+
 	}
 
 	private void doExportForms() {

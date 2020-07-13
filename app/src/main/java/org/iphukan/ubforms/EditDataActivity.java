@@ -401,7 +401,7 @@ public class EditDataActivity extends BaseActivity {
 
 		try {
 
-			final int THUMBNAIL_SIZE = 128;
+			final int THUMBNAIL_SIZE = 256; //128
 
 			InputStream fis = new ByteArrayInputStream(contents);
 			Bitmap imageBitmap = BitmapFactory.decodeStream(fis);

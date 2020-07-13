@@ -41,7 +41,7 @@ public class BlobDataDao {
 		"blob_data"
 	};
 
-	public BlobData mapObject(Cursor cursor) {
+	public static BlobData mapObject(Cursor cursor) {
 		BlobData data = new BlobData();
 		data.setId(cursor.getInt(0));
 		data.setGuid(cursor.getString(1));

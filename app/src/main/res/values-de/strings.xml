@@ -35,6 +35,7 @@
     <string name="field_desc">Feld Beschr.</string>
     <string name="field_name">Feldname</string>
     <string name="save_field_def">Felddefinition speichern</string>
+    <string name="del_field_def">Feld löschen</string>
     <string name="cancel">Absagen</string>
     <string name="ok">OK</string>
     <string name="enter_new_field_name">Geben Sie einen neuen Feldnamen ein</string>
@@ -98,4 +99,6 @@
     <string name="record_already_exists">Ein Datensatz existiert bereits für, Schlüssel: %1$s</string>
     <string name="field_is_required">%1$s ist erforderlich</string>
     <string name="field_value_invalid_example">%1$s-Feldwert %2$s ist ungültig. Beispiel %3$s</string>
+    <string name="allow_storage">Erlaube Speicherberechtigung?</string>
+    <string name="permission_granted">Genehmigung erteilen</string>
 </resources>

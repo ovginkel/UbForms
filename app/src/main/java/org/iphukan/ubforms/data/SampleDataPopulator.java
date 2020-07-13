@@ -20,7 +20,7 @@ public class SampleDataPopulator {
 	}
 	
 	
-	private void addSampleData(EntityDao entityDao, AttributeDao attributeDao, DataDao dataDao) {
+	private static void addSampleData(EntityDao entityDao, AttributeDao attributeDao, DataDao dataDao) {
 		
 		Entity entity;
 		Attribute attribute;

@@ -1,15 +1,8 @@
 package org.iphukan.ubforms;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -22,6 +15,14 @@ import android.widget.TextView;
 import org.iphukan.ubforms.data.Attribute;
 import org.iphukan.ubforms.data.DataDao;
 import org.iphukan.ubforms.data.Entity;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class SearchResultsActivity extends BaseActivity {
@@ -111,7 +112,47 @@ public class SearchResultsActivity extends BaseActivity {
 
 	}
 
-	private boolean isListable(Attribute attribute) {
+	private static final class RefByData {
+		public String id;
+		public String title;
+	}
+
+	private List<SearchResultsActivity.RefByData> getRefByData(String refEntityName, String refAttributeName, String entityid) {
+		List<SearchResultsActivity.RefByData> result = new ArrayList<SearchResultsActivity.RefByData>();
+		try {
+			Entity refEntity = new Entity();
+			refEntity.setName(refEntityName);
+			refEntity.setAttributes(this.getAttributes(refEntity));
+			Map<String, String> refValues = new HashMap<String, String>();
+			refValues.put(refAttributeName, entityid);
+
+			List<Map<String, String>> results;
+			DataDao dataDao = new DataDao(sqlHelper.getWritableDatabase());
+			try {
+				results = dataDao.searchExact(refEntity, refValues);
+			} finally {
+				sqlHelper.close();
+			}
+			for (Map<String, String> row: results) {
+				SearchResultsActivity.RefByData rbd = new SearchResultsActivity.RefByData();
+				if((!(row.get(refAttributeName)==null))?row.get(refAttributeName).equals(entityid):false){
+                    rbd.id = row.get("_id");
+                    rbd.title = this.getTitle(refEntityName, Long.valueOf(rbd.id), refAttributeName);
+                    result.add(rbd);
+                }
+				else if(row.get("_id").equals(entityid)) {
+					rbd.id = row.get("_id");
+					rbd.title = this.getTitle(refEntityName, Long.valueOf(rbd.id), refAttributeName);
+					result.add(rbd);
+				}
+			}
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}
+		return result;
+	}
+
+	private static boolean isListable(Attribute attribute) {
 		return attribute.isListable() && 
 				(
 						attribute.getDataType().equals(Attribute.STRING_TYPE) 
@@ -133,25 +174,120 @@ public class SearchResultsActivity extends BaseActivity {
 
 		List<Attribute> attributes = getAttributes(entity);
 		List<Entity> entities = new ArrayList<Entity>();
-
+		List<Entity> bentities = new ArrayList<Entity>();
 
 		for (Map<String, String> result: results) {
-
+			Map<String, String> result_ref = new HashMap<String, String>();
 			for (Attribute attribute: attributes) {
 				if (isListable(attribute)) {
 					if (!result.containsKey(attribute.getAttributeName())) {
+						result_ref.put(attribute.getAttributeName(), "");
 						result.put(attribute.getAttributeName(), "");
+					}
+					else {
+						if(attribute.getDataType().equals(Attribute.REF_TYPE) || attribute.getDataType().equals(Attribute.REF_BY_TYPE)) { //attribute.getDataType().equals(Attribute.REF_BY_TYPE) ||
+
+							////
+							String ref = attribute.getRefEntityName();
+
+							if (!(ref == null || ref.trim().length() == 0)) // || ref.indexOf(" ") == -1))
+							{
+								String[] sa = ref.split(" ");
+								String refEntityName = sa[0];
+								String refAttributeName = "";
+								String sid_str = "";
+								if(attribute.getDataType().equals(Attribute.REF_BY_TYPE))
+								{
+									Entity refEntity = new Entity();
+									refEntity.setName(refEntityName);
+									List<Attribute> refAttributes = this.getAttributes(refEntity);
+									for(Attribute ref_attribute: refAttributes) {
+										if (ref_attribute.getDataType().equals(Attribute.REF_TYPE)) {
+											String ref2 = ref_attribute.getRefEntityName();
+											String[] sa2 = ref2.split(" ");
+											if(!entity.getName().equals(sa2[0]))
+											{
+												refAttributeName = sa[1];
+												//refEntityName_new = sa2[0];
+												sid_str = result.get("_id"); //result.get("_id"); //result.get(ref_attribute.getAttributeName());
+											}
+										}
+									}
+								}
+								else  {
+									Entity refEntity = new Entity();
+									refEntity.setName(refEntityName);
+									List<Attribute> refAttributes = this.getAttributes(refEntity);
+									for(Attribute ref_attribute: refAttributes)
+									{
+										if(ref_attribute.getDataType().equals(Attribute.REF_BY_TYPE))
+										{
+
+											String ref2 = ref_attribute.getRefEntityName();
+											String[] sa2 = ref2.split(" ");
+											if(entity.getName().equals(sa2[0]))
+											{
+												refAttributeName = sa2[1];
+												sid_str = result.get(attribute.getAttributeName());
+											}
+										}
+									}
+									//refAttributeName = "meeting"; //entity.getName(); //.getAttributeName();
+								}
+								List<RefByData> list = new ArrayList<RefByData>();
+								//String sid_str = result.get(attribute.getAttributeName());
+								//int sid = Integer.parseInt(sid_str);
+								//if (sid_str != null) {
+									if(attribute.getDataType().equals(Attribute.REF_TYPE))
+									{
+										list = getRefByData(refEntityName, refAttributeName, sid_str);
+									}
+									else
+									{
+										list = getRefByData(refEntityName, refAttributeName, sid_str);
+									}
+								//}
+								String txt = "";
+								for (SearchResultsActivity.RefByData rbd : list) {
+									txt += "(" + rbd.id + ") " + rbd.title + "\r\n";
+								}
+								if (txt.length() > 2) {
+									txt = txt.substring(0, txt.length() - 2);
+								}
+
+								/////
+								result_ref.put(attribute.getAttributeName(), txt);
+							}
+							else {
+								result_ref.put(attribute.getAttributeName(), result.get(attribute.getAttributeName()));
+							}
+						}
+						else
+						{
+							result_ref.put(attribute.getAttributeName(), result.get(attribute.getAttributeName()));
+						}
 					}
 				} else {
 					result.remove(attribute.getAttributeName());
+					//result_ref.remove(attribute.getAttributeName());
 				}
 			}
+
+			//Must copy id also...
+			result_ref.put("_id", result.get("_id"));
 
 			Entity aentity = new Entity();
 			aentity.setName(entity.getName());
 			aentity.setAttributes(attributes);
-			aentity.setValues(result);
+			aentity.setValues(result_ref);
 			entities.add(aentity);
+
+
+			Entity bentity = new Entity();
+			bentity.setName(entity.getName());
+			bentity.setAttributes(attributes);
+			bentity.setValues(result);
+			bentities.add(bentity);
 
 		}
 
@@ -225,7 +361,16 @@ public class SearchResultsActivity extends BaseActivity {
 			bv = new Button(this);
 			bv.setText(getString(R.string.entity_arrow,getSelectText()));
 			bv.setTextSize(TEXT_SIZE_LARGE);
-			final Entity fentity = aentity;
+			String aid = aentity.getValues().get("_id");
+			Entity mbentity=null;
+			for(Entity bentity:bentities){
+				if(aid.equals(bentity.getValues().get("_id"))) {
+					mbentity=bentity;
+					break;
+				}
+			}
+			final Entity fentity = mbentity;
+
 			View.OnClickListener ocl;
 			if (this.mSelectMode == null) {
 				ocl = new View.OnClickListener() {
@@ -261,7 +406,7 @@ public class SearchResultsActivity extends BaseActivity {
 
 	}
 
-	private boolean isAlphaSort(Attribute attribute) {
+	private static boolean isAlphaSort(Attribute attribute) {
 		/*String v = attribute.getValidationExample();
 		if (v == null || v.trim().length() == 0) return true;
 		for (int i = 0; i < v.length(); i++) {

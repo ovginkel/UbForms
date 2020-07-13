@@ -16,8 +16,8 @@
     <string name="cap_search">Soek</string>
     <string name="choices">Keuses</string>
     <string name="confirm_all_form_defs">Bevestig: Vervang alle vorm definisies? (Dit mag alle data beinvloed!)</string>
-    <string name="data_files_exported">%1$d data dokumente uitgevoer</string>
-    <string name="data_files_imported">%1$d data dokumente ingevoer</string>
+    <string name="data_files_exported">%1$s data dokumente uitgevoer</string>
+    <string name="data_files_imported">%1$s data dokumente ingevoer</string>
     <string name="data_type">Data tipe</string>
     <string name="date">datum</string>
     <string name="delete">Vernietig</string>
@@ -68,6 +68,7 @@
     <string name="save">Stoor</string>
     <string name="save_copy">Stoor kopie</string>
     <string name="save_field_def">Stoor Veld Definisie</string>
+    <string name="del_field_def">Wis Veld</string>
     <string name="saved">Gestoor</string>
     <string name="search_">soek</string>
     <string name="search_for">Soek vir: %1$s</string>
@@ -91,4 +92,6 @@
     <string name="val_example">Validasie Voorbeeld</string>
     <string name="val_regex">Validasie RegEx</string>
     <string name="yes">Ja</string>
+    <string name="allow_storage">Laat stoor toe?</string>
+    <string name="permission_granted">Staan toe</string>
 </resources>

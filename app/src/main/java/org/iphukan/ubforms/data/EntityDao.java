@@ -29,7 +29,7 @@ public class EntityDao {
 		"entity_name"
 	};
 
-	public Entity mapObject(Cursor cursor) {
+	public static Entity mapObject(Cursor cursor) {
 		Entity entity = new Entity();
 		entity.setId(cursor.getInt(0));
 		entity.setName(cursor.getString(1));

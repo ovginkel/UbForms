@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -32,6 +33,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.iphukan.ubforms.common.DialogUtils;
+import org.iphukan.ubforms.common.IDialogClickListener;
+import org.iphukan.ubforms.common.IGrantPermissionCallback;
 import org.iphukan.ubforms.data.Attribute;
 import org.iphukan.ubforms.data.BlobData;
 import org.iphukan.ubforms.data.BlobDataDao;
@@ -298,7 +308,24 @@ public class EditViewFactory {
 				final BlobData fblobData = blobData;
 				dl.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
-						saveCopyFile(fblobData);
+						checkStoragePermission(activity, new IGrantPermissionCallback() {
+							@Override
+							public void granted() {
+								DialogUtils.displayChooseOkNoDialog(activity, R.string.allow_storage,
+										R.string.permission_granted, new IDialogClickListener() {
+											@Override
+											public void onOK() {
+												saveCopyFile(fblobData);
+
+											}
+										});
+							}
+
+							@Override
+							public void denied() {
+
+							}
+						});
 					}
 				});
 				dp2.addView(dl);
@@ -348,6 +375,26 @@ public class EditViewFactory {
 		}
 	}
 
+    private static void checkStoragePermission(Activity activity, final IGrantPermissionCallback callback) {
+        Dexter.withActivity(activity)
+                .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (callback == null) return;
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            callback.denied();
+                        } else {
+                            callback.granted();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
 
 	private BlobData getBlob(String guid) {
 		BlobDataDao dataDao = new BlobDataDao(sqlHelper.getWritableDatabase());

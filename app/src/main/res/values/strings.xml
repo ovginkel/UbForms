@@ -35,6 +35,7 @@
     <string name="field_desc">Field Desc.</string>
     <string name="field_name">Field Name</string>
     <string name="save_field_def">Save Field Definition</string>
+    <string name="del_field_def">Delete Field</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="enter_new_field_name">Enter new field name</string>
@@ -98,4 +99,6 @@
     <string name="record_already_exists">A record already exists for, key: %1$s</string>
     <string name="field_is_required">%1$s is required</string>
     <string name="field_value_invalid_example">%1$s value %2$s is invalid. Example: %3$s</string>
+    <string name="allow_storage">Allow storage permission?</string>
+    <string name="permission_granted">Grant Permission</string>
 </resources>

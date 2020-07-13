@@ -72,7 +72,7 @@ public class Validator {
 		return null;
 	}
 
-    public String validate_dontcare_unique(List<Attribute> attributes, Map<String, String> values) {
+    public static String validate_dontcare_unique(List<Attribute> attributes, Map<String, String> values) {
 
         List<Attribute> keys = new ArrayList<Attribute>();
         for (Attribute attribute: attributes) {

@@ -1,9 +1,9 @@
 package org.iphukan.ubforms;
 
-import org.iphukan.ubforms.data.Attribute;
-import org.iphukan.ubforms.data.AttributeDao;
-import org.iphukan.ubforms.data.Entity;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.iphukan.ubforms.data.Attribute;
+import org.iphukan.ubforms.data.AttributeDao;
+import org.iphukan.ubforms.data.Entity;
 
 public class AttributeDetailsActivity extends BaseActivity {
 
@@ -38,7 +42,7 @@ public class AttributeDetailsActivity extends BaseActivity {
 		
 		LinearLayout fieldDetails = new LinearLayout(this);
 		fieldDetails.setOrientation(LinearLayout.VERTICAL);
-        fieldDetails.setMinimumWidth(COL_MIN_WIDTH);
+        //fieldDetails.setMinimumWidth(COL_MIN_WIDTH);
 		setContentView(fieldDetails);
 		
 		Button btnSave = new Button(this);
@@ -118,6 +122,33 @@ public class AttributeDetailsActivity extends BaseActivity {
 		fieldDetails.addView(tvExample);
 		etValidationExample = new EditText(this);
 		fieldDetails.addView(etValidationExample);
+
+		Button btnDel = new Button(this);
+		btnDel.setText(R.string.del_field_def);
+		btnDel.setTextSize(TEXT_SIZE_LARGE);
+		btnDel.setBackgroundColor(Color.parseColor("#A00000"));
+		final Context context = this;
+		btnDel.setOnClickListener(new OnClickListener(){
+			public void onClick(View view) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage(getString(R.string.are_sure_delete_item))
+						.setCancelable(false)
+						.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								delField();
+							}
+						})
+						.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		});
+
+		fieldDetails.addView(btnDel);
 		
 		Bundle bundle = getIntent().getExtras();
 
@@ -148,6 +179,31 @@ public class AttributeDetailsActivity extends BaseActivity {
 		try {
 			currentAttribute = new AttributeDao(sqlHelper.getWritableDatabase()).save(currentAttribute);
 			makeToast(getString(R.string.saved));
+			finish();
+		} finally {
+			sqlHelper.close();
+		}
+	}
+
+	private void delField() {
+		if (currentAttribute == null) return;
+		/*currentAttribute.setAttributeName(etFieldName.getText().toString());
+		currentAttribute.setAttributeDesc(etFieldDescription.getText().toString());
+		int position = spDatatype.getSelectedItemPosition();
+		currentAttribute.setDataType(Attribute.DATA_TYPES[position]);
+		currentAttribute.setRefEntityName(etRefType.getText().toString());
+		currentAttribute.setPrimaryKeyPart(cbKey.isChecked());
+		currentAttribute.setRequired(cbRequired.isChecked());
+		currentAttribute.setSearchable(cbSearchable.isChecked());
+		currentAttribute.setListable(cbListable.isChecked());
+		currentAttribute.setEntityDescription(cbEntityDescription.isChecked());
+		currentAttribute.setChoices(etChoices.getText().toString());
+		currentAttribute.setValidationRegex(etValidationRegex.getText().toString());
+		currentAttribute.setValidationExample(etValidationExample.getText().toString());
+	*/
+		try {
+			new AttributeDao(sqlHelper.getWritableDatabase()).delete(currentAttribute);
+			makeToast(getString(R.string.deleted));
 			finish();
 		} finally {
 			sqlHelper.close();

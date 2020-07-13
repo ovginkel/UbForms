@@ -1,8 +1,5 @@
 package org.iphukan.ubforms;
 
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +18,9 @@ import org.iphukan.ubforms.data.Entity;
 import org.iphukan.ubforms.data.EntityDao;
 import org.iphukan.ubforms.data.UrSqlHelper;
 
+import java.util.List;
+import java.util.Map;
+
 public class BaseActivity extends Activity {
 	
 	public final static String TAG = "ubforms";
@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
     public static final String SELECT_MODE_SELECT = "select";
 	public static String FILE_NAME = "_fileName";
 
-	public static int COL_MIN_WIDTH = 300;
+	public static int COL_MIN_WIDTH = 150;
 	public static int TEXT_SIZE_SMALL = 7;
 	public static int TEXT_SIZE_MEDIUM = 9;
 	public static int TEXT_SIZE_LARGE = 11;
@@ -111,7 +111,7 @@ public class BaseActivity extends Activity {
 		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 	}
 	
-	protected Bundle getEntitySelectedBundle(Entity entity) {
+	protected static Bundle getEntitySelectedBundle(Entity entity) {
 		Bundle bundle = new Bundle();
 		if (entity != null) {
 			bundle.putString(EnterDataActivity.ENTITY_NAME, entity.getName());

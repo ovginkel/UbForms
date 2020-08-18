@@ -157,6 +157,7 @@ public class SearchResultsActivity extends BaseActivity {
 				(
 						attribute.getDataType().equals(Attribute.STRING_TYPE) 
 						|| attribute.getDataType().equals(Attribute.DATE_TYPE)
+						|| attribute.getDataType().equals(Attribute.TIME_TYPE)
 						|| attribute.getDataType().equals(Attribute.CHOICES_TYPE)
                         || attribute.getDataType().equals(Attribute.REF_BY_TYPE)
 						|| attribute.getDataType().equals(Attribute.REF_TYPE)

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDateTime;
 
 import android.Manifest;
 import android.app.Activity;
@@ -516,10 +517,15 @@ public class EditViewFactory {
 		public void onClick(View v) {
 
 			String stime = tv.getText().toString();
+			int[] time  = new int[2];
 			if (stime == null || stime.trim().length() == 0) {
-				stime = "12:00";
+				time[0] = LocalDateTime.now().getHour();
+				time[1] = LocalDateTime.now().getMinute();
+				//stime = //"12:00";
 			}
-			int[] time = parseTime(stime);
+			else {
+				time = parseTime(stime);
+			}
 
 			dialog = new TimePickerDialog(
 					activity,

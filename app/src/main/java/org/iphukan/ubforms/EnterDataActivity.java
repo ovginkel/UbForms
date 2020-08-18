@@ -149,6 +149,7 @@ public class EnterDataActivity extends BaseActivity {
 
 		}
 
+		/*
 		Button btnDeleteEntity = new Button(this);
 		btnDeleteEntity.setText(getString(R.string.delete));
 		btnDeleteEntity.setTextSize(TEXT_SIZE_LARGE);
@@ -174,7 +175,7 @@ public class EnterDataActivity extends BaseActivity {
 			}
 		});
 		rootView.addView(btnDeleteEntity);
-
+	    */
 
 		setContentView(rootView);
 
@@ -254,7 +255,7 @@ public class EnterDataActivity extends BaseActivity {
 		} finally {
 			sqlHelper.close();
 		}
-
+		this.finish();
 	}
 
 	private BlobData saveBlob(BlobData blobData) {

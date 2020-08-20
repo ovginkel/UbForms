@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDateTime;
 
 import android.Manifest;
 import android.app.Activity;
@@ -519,8 +518,8 @@ public class EditViewFactory {
 			String stime = tv.getText().toString();
 			int[] time  = new int[2];
 			if (stime == null || stime.trim().length() == 0) {
-				time[0] = LocalDateTime.now().getHour();
-				time[1] = LocalDateTime.now().getMinute();
+				stime = android.text.format.DateFormat.format("HH:mm",System.currentTimeMillis()).toString();
+				time = parseTime(stime);
 				//stime = //"12:00";
 			}
 			else {
